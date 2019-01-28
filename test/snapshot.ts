@@ -74,6 +74,7 @@ export const snapshot = [
                     kind: 'primitive',
                     type: 'string',
                     rawType: "'A'",
+                    literal: 'A',
                 },
                 optional: false,
             },
@@ -83,6 +84,7 @@ export const snapshot = [
                     kind: 'primitive',
                     type: 'number',
                     rawType: '1',
+                    literal: 1,
                 },
                 optional: false,
             },
@@ -369,14 +371,17 @@ export const snapshot = [
                         {
                             kind: 'primitive',
                             type: 'string',
+                            literal: 'a',
                         },
                         {
                             kind: 'primitive',
                             type: 'string',
+                            literal: 'b',
                         },
                         {
                             kind: 'primitive',
                             type: 'string',
+                            literal: 'c',
                         },
                     ],
                 },
@@ -600,14 +605,17 @@ export const snapshot = [
             {
                 kind: 'primitive',
                 type: 'number',
+                literal: 0,
             },
             {
                 kind: 'primitive',
                 type: 'number',
+                literal: 2,
             },
             {
                 kind: 'primitive',
                 type: 'string',
+                literal: 'C',
             },
         ],
     },

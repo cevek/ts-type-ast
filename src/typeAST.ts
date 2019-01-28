@@ -20,6 +20,7 @@ declare module 'typescript' {
     interface Type {
         id: number;
         intrinsicName: string;
+        value: string;
     }
 }
 
@@ -89,7 +90,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 kind: 'primitive',
                 type: isStringLiteral ? 'string' : isNumberLiteral ? 'number' : isBooleanLiteral ? 'boolean' : never(),
                 rawType: rawType,
-                literal: tsType.intrinsicName,
+                literal: nonNull(tsType.value === undefined ? tsType.intrinsicName : tsType.value),
             };
             return type;
         }
@@ -221,4 +222,9 @@ function rawType(node: ts.TypeNode | undefined) {
 
 function never(never?: never): never {
     throw new Error('Never possible');
+}
+
+function nonNull<T>(val: T | undefined): T {
+    if (val === undefined) throw new Error('Undefined is not expected');
+    return val;
 }
