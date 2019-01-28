@@ -20,7 +20,7 @@ declare module 'typescript' {
     interface Type {
         id: number;
         intrinsicName: string;
-        value: string;
+        value: any;
     }
 }
 
@@ -79,9 +79,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
         if (tsType.isUnion() && !tsType.aliasSymbol) {
             const type: UnionLiteral = {
+                id: tsType.id,
                 kind: 'unionLiteral',
                 members: tsType.types.map(t => getType(t, undefined)),
             };
+            typesMap.set(tsType, type);
             return type;
         }
 
@@ -119,9 +121,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         }
         if (tsType.flags & ts.TypeFlags.Object && tsType.symbol.flags & ts.SymbolFlags.TypeLiteral) {
             const type: InterfaceLiteral = {
+                id: tsType.id,
                 kind: 'interfaceLiteral',
                 members: checker.getPropertiesOfType(tsType).map(createProp),
             };
+            typesMap.set(tsType, type);
             return type;
         }
 

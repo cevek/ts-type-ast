@@ -183,6 +183,7 @@ export const snapshot = [
             {
                 name: 'interfaceLiteral',
                 type: {
+                    id: 92,
                     kind: 'interfaceLiteral',
                     members: [
                         {
@@ -197,11 +198,13 @@ export const snapshot = [
                         {
                             name: 'b',
                             type: {
+                                id: 93,
                                 kind: 'interfaceLiteral',
                                 members: [
                                     {
                                         name: 'c',
                                         type: {
+                                            id: 94,
                                             kind: 'interfaceLiteral',
                                             members: [
                                                 {
@@ -217,6 +220,93 @@ export const snapshot = [
                                             ],
                                         },
                                         optional: false,
+                                    },
+                                ],
+                            },
+                            optional: false,
+                        },
+                    ],
+                },
+                optional: false,
+            },
+        ],
+    },
+    {
+        id: 94,
+        kind: 'interfaceLiteral',
+        members: [
+            {
+                name: 'dOpt',
+                doc: 'd doc',
+                type: {
+                    kind: 'primitive',
+                    type: 'string',
+                    rawType: 'string',
+                },
+                optional: true,
+            },
+        ],
+    },
+    {
+        id: 93,
+        kind: 'interfaceLiteral',
+        members: [
+            {
+                name: 'c',
+                type: {
+                    id: 94,
+                    kind: 'interfaceLiteral',
+                    members: [
+                        {
+                            name: 'dOpt',
+                            doc: 'd doc',
+                            type: {
+                                kind: 'primitive',
+                                type: 'string',
+                                rawType: 'string',
+                            },
+                            optional: true,
+                        },
+                    ],
+                },
+                optional: false,
+            },
+        ],
+    },
+    {
+        id: 92,
+        kind: 'interfaceLiteral',
+        members: [
+            {
+                name: 'a',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number',
+                },
+                optional: false,
+            },
+            {
+                name: 'b',
+                type: {
+                    id: 93,
+                    kind: 'interfaceLiteral',
+                    members: [
+                        {
+                            name: 'c',
+                            type: {
+                                id: 94,
+                                kind: 'interfaceLiteral',
+                                members: [
+                                    {
+                                        name: 'dOpt',
+                                        doc: 'd doc',
+                                        type: {
+                                            kind: 'primitive',
+                                            type: 'string',
+                                            rawType: 'string',
+                                        },
+                                        optional: true,
                                     },
                                 ],
                             },
@@ -284,6 +374,7 @@ export const snapshot = [
             {
                 name: 'union',
                 type: {
+                    id: 100,
                     kind: 'unionLiteral',
                     members: [
                         {
@@ -325,6 +416,7 @@ export const snapshot = [
             {
                 name: 'unionOpt',
                 type: {
+                    id: 100,
                     kind: 'unionLiteral',
                     members: [
                         {
@@ -366,6 +458,7 @@ export const snapshot = [
             {
                 name: 'unionabc',
                 type: {
+                    id: 108,
                     kind: 'unionLiteral',
                     members: [
                         {
@@ -386,6 +479,65 @@ export const snapshot = [
                     ],
                 },
                 optional: false,
+            },
+        ],
+    },
+    {
+        id: 100,
+        kind: 'unionLiteral',
+        members: [
+            {
+                id: 96,
+                kind: 'interface',
+                name: 'SomeA',
+                members: [
+                    {
+                        name: 'someA',
+                        type: {
+                            kind: 'primitive',
+                            type: 'number',
+                            rawType: 'number',
+                        },
+                        optional: false,
+                    },
+                ],
+            },
+            {
+                id: 97,
+                kind: 'interface',
+                name: 'SomeB',
+                members: [
+                    {
+                        name: 'someB',
+                        type: {
+                            kind: 'primitive',
+                            type: 'number',
+                            rawType: 'number',
+                        },
+                        optional: false,
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: 108,
+        kind: 'unionLiteral',
+        members: [
+            {
+                kind: 'primitive',
+                type: 'string',
+                literal: 'a',
+            },
+            {
+                kind: 'primitive',
+                type: 'string',
+                literal: 'b',
+            },
+            {
+                kind: 'primitive',
+                type: 'string',
+                literal: 'c',
             },
         ],
     },

@@ -15,7 +15,7 @@ if (process.argv.slice(-1)[0] === 'create-snapshot') {
 for (let i = 0; i < types.length; i++) {
     const type = types[i];
     if (JSON.stringify(snapshot[i]) !== JSON.stringify(type)) {
-        throw new Error(type.name + ' is not same');
+        throw new Error(i + ' is not same');
     }
 }
 
