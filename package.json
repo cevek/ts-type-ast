@@ -1,12 +1,13 @@
 {
     "name": "ts-type-ast",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index",
     "scripts": {
         "test": "npx ts-node test/main",
-        "build": "npx tsc -p src"
+        "build": "npx tsc -p src",
+        "prepublish": "npm test && npm run build"
     },
     "keywords": [
         "typescript",
