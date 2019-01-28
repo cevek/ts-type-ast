@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { typeAST } from '../src';
+import { typeAST } from '../src/typeAST';
 import { snapshotTypes } from './snapshot';
 
 const file = __dirname + '/test-file.ts';
@@ -13,4 +13,5 @@ for (let i = 0; i < types.length; i++) {
         throw new Error(type.name + ' is not same');
     }
 }
+
 // console.log(types);
