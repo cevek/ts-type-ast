@@ -32,7 +32,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     });
     return [...typesMap.values()];
 
-    function getType(nullableTsType: ts.Type): AllTypes {
+    function getType(nullableTsType: ts.Type, rawType: string | undefined): AllTypes {
         const tsType = nullableTsType.getNonNullableType();
 
         let type = typesMap.get(tsType);
@@ -70,6 +70,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     : isAny
                     ? 'any'
                     : never(),
+                rawType: rawType,
                 literal: undefined,
             };
             return type;
@@ -78,22 +79,16 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         if (tsType.isUnion() && !tsType.aliasSymbol) {
             const type: UnionLiteral = {
                 kind: 'unionLiteral',
-                members: tsType.types.map(getType),
+                members: tsType.types.map(t => getType(t, undefined)),
             };
             return type;
         }
 
-        if (tsType.isUnion() && !tsType.aliasSymbol) {
-            const type: UnionLiteral = {
-                kind: 'unionLiteral',
-                members: tsType.types.map(getType),
-            };
-            return type;
-        }
         if (isStringLiteral || isNumberLiteral || isBooleanLiteral) {
             const type: Primitive = {
                 kind: 'primitive',
                 type: isStringLiteral ? 'string' : isNumberLiteral ? 'number' : isBooleanLiteral ? 'boolean' : never(),
+                rawType: rawType,
                 literal: tsType.intrinsicName,
             };
             return type;
@@ -104,17 +99,20 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             if (elementType) {
                 const type: ArrayType = {
                     kind: 'array',
-                    element: getType(elementType),
+                    //todo: rawType
+                    element: getType(elementType, undefined),
                 };
                 return type;
             }
         }
         if (symbol && symbol.declarations[0].getSourceFile().hasNoDefaultLib) {
+            const typeArgs = (tsType as ts.TypeReference).typeArguments || [];
             const type: Native = {
                 id: tsType.id,
                 kind: 'native',
                 name: symbol.name,
-                generics: tsType.aliasTypeArguments ? tsType.aliasTypeArguments.map(t => getType(t)) : [],
+                //todo:
+                generics: typeArgs.map(t => getType(t, undefined)),
             };
             return type;
         }
@@ -126,7 +124,6 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             return type;
         }
 
-        if (tsType.id === 14) debugger;
         type = { id: tsType.id } as RootTypes;
         typesMap.set(tsType, type);
         nonResolvedTypes.add(type);
@@ -147,13 +144,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             | undefined;
         const retType = signature ? signature.getReturnType() : nonNullType;
         const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
-        const rawType = declNode && declNode.getText();
 
         return {
             name: symbol.name,
             doc: getDoc(symbol),
-            type: getType(retType),
-            typeName: rawType,
+            type: getType(retType, rawType(declNode)),
             args: signature && signature.parameters.map(createArg),
             optional: (symbol.flags & ts.SymbolFlags.Optional) > 0 || retType.getNonNullableType() !== retType,
         };
@@ -162,13 +157,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     function createArg(symbol: ts.Symbol): Arg {
         const tsType = getTypeFromSymbol(symbol);
         const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
-        const rawType = declNode && declNode.getText();
 
         return {
             name: symbol.name,
             doc: getDoc(symbol),
-            type: getType(tsType),
-            typeName: rawType,
+            type: getType(tsType, rawType(declNode)),
             optional: (symbol.flags & ts.SymbolFlags.Optional) > 0 || tsType.getNonNullableType() !== tsType,
         };
     }
@@ -186,7 +179,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     function visitor(node: ts.Node) {
         if (ts.isInterfaceDeclaration(node)) {
             const tsType = checker.getTypeAtLocation(node);
-            const type = getType(tsType) as Interface;
+            const type = getType(tsType, undefined) as Interface;
             updateType(type, {
                 id: type.id,
                 kind: 'interface',
@@ -197,29 +190,33 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         }
         if (ts.isEnumDeclaration(node)) {
             const tsType = checker.getTypeAtLocation(node) as ts.UnionOrIntersectionType;
-            const type = getType(tsType) as Enum;
+            const type = getType(tsType, undefined) as Enum;
             updateType(type, {
                 id: type.id,
                 kind: 'enum',
                 doc: getDoc(tsType.symbol),
                 name: node.name.text,
-                types: tsType.types.map(getType),
+                types: tsType.types.map(t => getType(t, undefined)),
             });
         }
         if (ts.isTypeAliasDeclaration(node)) {
             if (ts.isUnionTypeNode(node.type)) {
                 const tsType = checker.getTypeAtLocation(node.type);
-                const type = getType(tsType) as Union;
+                const type = getType(tsType, undefined) as Union;
                 updateType(type, {
                     id: type.id,
                     kind: 'union',
                     doc: getDoc(tsType.aliasSymbol),
                     name: node.name.text,
-                    members: node.type.types.map(typeNode => getType(checker.getTypeFromTypeNode(typeNode))),
+                    members: node.type.types.map(typeNode => getType(checker.getTypeFromTypeNode(typeNode), undefined)),
                 });
             }
         }
     }
+}
+
+function rawType(node: ts.TypeNode | undefined) {
+    return node ? node.getText() : undefined;
 }
 
 function never(never?: never): never {

@@ -3,6 +3,7 @@ export type RootTypes = Interface | Union | Enum;
 export interface Primitive {
     kind: 'primitive';
     type: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
+    rawType: string | undefined;
     literal: string | number | boolean | undefined;
 }
 export interface Native {
@@ -51,12 +52,10 @@ export interface Prop {
     type: AllTypes;
     args: Arg[] | undefined;
     optional: boolean;
-    typeName: string | undefined;
 }
 export interface Arg {
     doc: string | undefined;
     name: string;
     type: AllTypes;
-    typeName: string | undefined;
     optional: boolean;
 }

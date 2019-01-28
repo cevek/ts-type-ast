@@ -37,19 +37,29 @@ interface A {
     };
 }
 
+interface SomeA {
+    someA: number;
+}
+interface SomeB {
+    someB: number;
+}
+interface SomeC {
+    someC: number;
+}
+
 interface Unions {
-    union: A | C;
-    unionOpt?: A | C;
+    union: SomeA | SomeB;
+    unionOpt?: SomeA | SomeB;
     unionabc: 'a' | 'b' | 'c';
 }
 
 interface B {
-    noArgsMethod(): A;
-    method(arg1: number, arg: string): A;
-    optMethod?(): A; // incorrect
-    methodOptArg(arg1: number | undefined, arg2?: string): A;
-    methodOpt(arg1: number): A | undefined;
-    methodDocArg(/** Arg doc */ arg: number): A;
+    noArgsMethod(): number;
+    method(arg1: number, arg: string): number;
+    optMethod?(): number; 
+    methodOptArg(arg1: number | undefined, arg2?: string): number;
+    methodOpt(arg1: number): number | undefined;
+    methodDocArg(/** Arg doc */ arg: number): number;
 }
 
 interface C {
@@ -60,7 +70,7 @@ interface CD extends C {
 }
 
 /** Union Doc */
-type Union = A | B;
+type Union = SomeA | SomeC;
 
 /** Enum Doc */
 enum Enum {
