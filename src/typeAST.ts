@@ -108,7 +108,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 return type;
             }
         }
-        if (symbol && symbol.declarations[0].getSourceFile().hasNoDefaultLib) {
+        if (symbol && symbol.declarations && symbol.declarations[0].getSourceFile().hasNoDefaultLib) {
             const typeArgs = (tsType as ts.TypeReference).typeArguments || [];
             const type: Native = {
                 id: tsType.id,
@@ -161,7 +161,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function createArg(symbol: ts.Symbol): Arg {
         const tsType = getTypeFromSymbol(symbol);
-        const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
+        const declNode = symbol.declarations ? (symbol.declarations[0] as ts.PropertySignature).type : undefined;
 
         return {
             name: symbol.name,
@@ -178,7 +178,10 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     }
 
     function getTypeFromSymbol(symbol: ts.Symbol) {
-        return checker.getTypeOfSymbolAtLocation(symbol, symbol.declarations[0]);
+        return checker.getTypeOfSymbolAtLocation(
+            symbol,
+            symbol.declarations ? symbol.declarations[0] : ts.createIdentifier('Any')
+        );
     }
 
     function visitor(node: ts.Node) {
