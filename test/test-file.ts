@@ -15,7 +15,10 @@ interface A {
     literalTrue: true;
 
     opt?: number;
-    opt2: number | undefined | null;
+    null: number | null; 
+    undefined: number | undefined; 
+    undefinedNull: number | undefined | null; 
+    undefinedNull2?: number | null;
 
     /** Doc comment */
     doc: string;
@@ -57,8 +60,12 @@ interface B {
     noArgsMethod(): number;
     method(arg1: number, arg: string): number;
     optMethod?(): number; 
+    optNullableMethod?(): number | null; 
+    optNullableUndefinedMethod?(): number | null | undefined; 
     methodOptArg(arg1: number | undefined, arg2?: string): number;
+    methodNullableArg(arg1: number | null, arg2?: string): number;
     methodOpt(arg1: number): number | undefined;
+    methodNull(arg1: number): number | null;
     methodDocArg(/** Arg doc */ arg: number): number;
 }
 

@@ -12,7 +12,8 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'str',
@@ -21,7 +22,8 @@ export const snapshot = [
                     type: 'string',
                     rawType: 'string',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'bool',
@@ -30,7 +32,8 @@ export const snapshot = [
                     type: 'boolean',
                     rawType: 'boolean',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'never',
@@ -39,7 +42,8 @@ export const snapshot = [
                     type: 'never',
                     rawType: 'never',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'symbol',
@@ -48,7 +52,8 @@ export const snapshot = [
                     type: 'symbol',
                     rawType: 'symbol',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'void',
@@ -57,7 +62,8 @@ export const snapshot = [
                     type: 'void',
                     rawType: 'void',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'any',
@@ -66,7 +72,8 @@ export const snapshot = [
                     type: 'any',
                     rawType: 'any',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'literalA',
@@ -76,7 +83,8 @@ export const snapshot = [
                     rawType: "'A'",
                     literal: 'A',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'literal1',
@@ -86,7 +94,8 @@ export const snapshot = [
                     rawType: '1',
                     literal: 1,
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'literalTrue',
@@ -96,7 +105,8 @@ export const snapshot = [
                     rawType: 'true',
                     literal: 'true',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'opt',
@@ -105,16 +115,48 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: true,
+                orNull: false,
+                orUndefined: true,
             },
             {
-                name: 'opt2',
+                name: 'null',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | null',
+                },
+                orNull: true,
+                orUndefined: false,
+            },
+            {
+                name: 'undefined',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | undefined',
+                },
+                orNull: false,
+                orUndefined: true,
+            },
+            {
+                name: 'undefinedNull',
                 type: {
                     kind: 'primitive',
                     type: 'number',
                     rawType: 'number | undefined | null',
                 },
-                optional: false,
+                orNull: true,
+                orUndefined: true,
+            },
+            {
+                name: 'undefinedNull2',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | null',
+                },
+                orNull: true,
+                orUndefined: true,
             },
             {
                 name: 'doc',
@@ -124,7 +166,8 @@ export const snapshot = [
                     type: 'string',
                     rawType: 'string',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'int',
@@ -133,7 +176,8 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'Int',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'arr',
@@ -144,22 +188,24 @@ export const snapshot = [
                         type: 'number',
                     },
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'date',
                 type: {
-                    id: 85,
+                    id: 86,
                     kind: 'native',
                     name: 'Date',
                     generics: [],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'map',
                 type: {
-                    id: 91,
+                    id: 92,
                     kind: 'native',
                     name: 'Map',
                     generics: [
@@ -170,7 +216,7 @@ export const snapshot = [
                         {
                             kind: 'array',
                             element: {
-                                id: 85,
+                                id: 86,
                                 kind: 'native',
                                 name: 'Date',
                                 generics: [],
@@ -178,12 +224,13 @@ export const snapshot = [
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'interfaceLiteral',
                 type: {
-                    id: 92,
+                    id: 93,
                     kind: 'interfaceLiteral',
                     members: [
                         {
@@ -193,18 +240,19 @@ export const snapshot = [
                                 type: 'number',
                                 rawType: 'number',
                             },
-                            optional: false,
+                            orNull: false,
+                            orUndefined: false,
                         },
                         {
                             name: 'b',
                             type: {
-                                id: 93,
+                                id: 94,
                                 kind: 'interfaceLiteral',
                                 members: [
                                     {
                                         name: 'c',
                                         type: {
-                                            id: 94,
+                                            id: 95,
                                             kind: 'interfaceLiteral',
                                             members: [
                                                 {
@@ -215,24 +263,28 @@ export const snapshot = [
                                                         type: 'string',
                                                         rawType: 'string',
                                                     },
-                                                    optional: true,
+                                                    orNull: false,
+                                                    orUndefined: true,
                                                 },
                                             ],
                                         },
-                                        optional: false,
+                                        orNull: false,
+                                        orUndefined: false,
                                     },
                                 ],
                             },
-                            optional: false,
+                            orNull: false,
+                            orUndefined: false,
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 94,
+        id: 95,
         kind: 'interfaceLiteral',
         members: [
             {
@@ -243,18 +295,19 @@ export const snapshot = [
                     type: 'string',
                     rawType: 'string',
                 },
-                optional: true,
+                orNull: false,
+                orUndefined: true,
             },
         ],
     },
     {
-        id: 93,
+        id: 94,
         kind: 'interfaceLiteral',
         members: [
             {
                 name: 'c',
                 type: {
-                    id: 94,
+                    id: 95,
                     kind: 'interfaceLiteral',
                     members: [
                         {
@@ -265,16 +318,18 @@ export const snapshot = [
                                 type: 'string',
                                 rawType: 'string',
                             },
-                            optional: true,
+                            orNull: false,
+                            orUndefined: true,
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 92,
+        id: 93,
         kind: 'interfaceLiteral',
         members: [
             {
@@ -284,18 +339,19 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'b',
                 type: {
-                    id: 93,
+                    id: 94,
                     kind: 'interfaceLiteral',
                     members: [
                         {
                             name: 'c',
                             type: {
-                                id: 94,
+                                id: 95,
                                 kind: 'interfaceLiteral',
                                 members: [
                                     {
@@ -306,20 +362,23 @@ export const snapshot = [
                                             type: 'string',
                                             rawType: 'string',
                                         },
-                                        optional: true,
+                                        orNull: false,
+                                        orUndefined: true,
                                     },
                                 ],
                             },
-                            optional: false,
+                            orNull: false,
+                            orUndefined: false,
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 96,
+        id: 97,
         kind: 'interface',
         name: 'SomeA',
         members: [
@@ -330,12 +389,13 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 97,
+        id: 98,
         kind: 'interface',
         name: 'SomeB',
         members: [
@@ -346,12 +406,13 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 98,
+        id: 99,
         kind: 'interface',
         name: 'SomeC',
         members: [
@@ -362,23 +423,24 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 99,
+        id: 100,
         kind: 'interface',
         name: 'Unions',
         members: [
             {
                 name: 'union',
                 type: {
-                    id: 100,
+                    id: 101,
                     kind: 'unionLiteral',
                     members: [
                         {
-                            id: 96,
+                            id: 97,
                             kind: 'interface',
                             name: 'SomeA',
                             members: [
@@ -389,12 +451,13 @@ export const snapshot = [
                                         type: 'number',
                                         rawType: 'number',
                                     },
-                                    optional: false,
+                                    orNull: false,
+                                    orUndefined: false,
                                 },
                             ],
                         },
                         {
-                            id: 97,
+                            id: 98,
                             kind: 'interface',
                             name: 'SomeB',
                             members: [
@@ -405,22 +468,24 @@ export const snapshot = [
                                         type: 'number',
                                         rawType: 'number',
                                     },
-                                    optional: false,
+                                    orNull: false,
+                                    orUndefined: false,
                                 },
                             ],
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'unionOpt',
                 type: {
-                    id: 100,
+                    id: 101,
                     kind: 'unionLiteral',
                     members: [
                         {
-                            id: 96,
+                            id: 97,
                             kind: 'interface',
                             name: 'SomeA',
                             members: [
@@ -431,12 +496,13 @@ export const snapshot = [
                                         type: 'number',
                                         rawType: 'number',
                                     },
-                                    optional: false,
+                                    orNull: false,
+                                    orUndefined: false,
                                 },
                             ],
                         },
                         {
-                            id: 97,
+                            id: 98,
                             kind: 'interface',
                             name: 'SomeB',
                             members: [
@@ -447,18 +513,20 @@ export const snapshot = [
                                         type: 'number',
                                         rawType: 'number',
                                     },
-                                    optional: false,
+                                    orNull: false,
+                                    orUndefined: false,
                                 },
                             ],
                         },
                     ],
                 },
-                optional: true,
+                orNull: false,
+                orUndefined: true,
             },
             {
                 name: 'unionabc',
                 type: {
-                    id: 108,
+                    id: 109,
                     kind: 'unionLiteral',
                     members: [
                         {
@@ -478,16 +546,17 @@ export const snapshot = [
                         },
                     ],
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 100,
+        id: 101,
         kind: 'unionLiteral',
         members: [
             {
-                id: 96,
+                id: 97,
                 kind: 'interface',
                 name: 'SomeA',
                 members: [
@@ -498,12 +567,13 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
             },
             {
-                id: 97,
+                id: 98,
                 kind: 'interface',
                 name: 'SomeB',
                 members: [
@@ -514,14 +584,15 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
             },
         ],
     },
     {
-        id: 108,
+        id: 109,
         kind: 'unionLiteral',
         members: [
             {
@@ -542,7 +613,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 109,
+        id: 110,
         kind: 'interface',
         name: 'B',
         members: [
@@ -554,7 +625,8 @@ export const snapshot = [
                     rawType: 'number',
                 },
                 args: [],
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'method',
@@ -571,7 +643,8 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                     {
                         name: 'arg',
@@ -580,10 +653,12 @@ export const snapshot = [
                             type: 'string',
                             rawType: 'string',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'optMethod',
@@ -593,7 +668,30 @@ export const snapshot = [
                     rawType: 'number',
                 },
                 args: [],
-                optional: true,
+                orNull: false,
+                orUndefined: false,
+            },
+            {
+                name: 'optNullableMethod',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | null',
+                },
+                args: [],
+                orNull: true,
+                orUndefined: false,
+            },
+            {
+                name: 'optNullableUndefinedMethod',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | null | undefined',
+                },
+                args: [],
+                orNull: true,
+                orUndefined: true,
             },
             {
                 name: 'methodOptArg',
@@ -610,7 +708,8 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number | undefined',
                         },
-                        optional: true,
+                        orNull: false,
+                        orUndefined: true,
                     },
                     {
                         name: 'arg2',
@@ -619,10 +718,44 @@ export const snapshot = [
                             type: 'string',
                             rawType: 'string',
                         },
-                        optional: true,
+                        orNull: false,
+                        orUndefined: true,
                     },
                 ],
-                optional: false,
+                orNull: false,
+                orUndefined: false,
+            },
+            {
+                name: 'methodNullableArg',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number',
+                },
+                args: [
+                    {
+                        name: 'arg1',
+                        type: {
+                            kind: 'primitive',
+                            type: 'number',
+                            rawType: 'number | null',
+                        },
+                        orNull: true,
+                        orUndefined: false,
+                    },
+                    {
+                        name: 'arg2',
+                        type: {
+                            kind: 'primitive',
+                            type: 'string',
+                            rawType: 'string',
+                        },
+                        orNull: false,
+                        orUndefined: true,
+                    },
+                ],
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'methodOpt',
@@ -639,10 +772,34 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
-                optional: true,
+                orNull: false,
+                orUndefined: true,
+            },
+            {
+                name: 'methodNull',
+                type: {
+                    kind: 'primitive',
+                    type: 'number',
+                    rawType: 'number | null',
+                },
+                args: [
+                    {
+                        name: 'arg1',
+                        type: {
+                            kind: 'primitive',
+                            type: 'number',
+                            rawType: 'number',
+                        },
+                        orNull: false,
+                        orUndefined: false,
+                    },
+                ],
+                orNull: true,
+                orUndefined: false,
             },
             {
                 name: 'methodDocArg',
@@ -660,15 +817,17 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 117,
+        id: 124,
         kind: 'interface',
         name: 'C',
         members: [
@@ -679,12 +838,13 @@ export const snapshot = [
                     type: 'string',
                     rawType: 'string',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 118,
+        id: 125,
         kind: 'interface',
         name: 'CD',
         members: [
@@ -695,7 +855,8 @@ export const snapshot = [
                     type: 'number',
                     rawType: 'number',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
             {
                 name: 'c',
@@ -704,18 +865,19 @@ export const snapshot = [
                     type: 'string',
                     rawType: 'string',
                 },
-                optional: false,
+                orNull: false,
+                orUndefined: false,
             },
         ],
     },
     {
-        id: 119,
+        id: 126,
         kind: 'union',
         doc: 'Union Doc',
         name: 'Union',
         members: [
             {
-                id: 96,
+                id: 97,
                 kind: 'interface',
                 name: 'SomeA',
                 members: [
@@ -726,12 +888,13 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
             },
             {
-                id: 98,
+                id: 99,
                 kind: 'interface',
                 name: 'SomeC',
                 members: [
@@ -742,14 +905,15 @@ export const snapshot = [
                             type: 'number',
                             rawType: 'number',
                         },
-                        optional: false,
+                        orNull: false,
+                        orUndefined: false,
                     },
                 ],
             },
         ],
     },
     {
-        id: 126,
+        id: 133,
         kind: 'enum',
         doc: 'Enum Doc',
         name: 'Enum',

@@ -129,7 +129,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             return type;
         }
 
-        type = { id: tsType.id } as RootTypes;
+        type = {id: tsType.id} as RootTypes;
         typesMap.set(tsType, type);
         nonResolvedTypes.add(type);
         return type;
@@ -148,6 +148,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             | ts.Signature
             | undefined;
         const retType = signature ? signature.getReturnType() : nonNullType;
+        const nullableRetType = signature ? signature.getReturnType() : tsType;
         const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
 
         return {
@@ -155,7 +156,10 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             doc: getDoc(symbol),
             type: getType(retType, rawType(declNode)),
             args: signature && signature.parameters.map(createArg),
-            optional: (symbol.flags & ts.SymbolFlags.Optional) > 0 || retType.getNonNullableType() !== retType,
+            orNull: nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
+            orUndefined:
+                nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0),
+            // nullable: tsType !== tsType.getNonNullableType(),
         };
     }
 
@@ -167,7 +171,9 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             name: symbol.name,
             doc: getDoc(symbol),
             type: getType(tsType, rawType(declNode)),
-            optional: (symbol.flags & ts.SymbolFlags.Optional) > 0 || tsType.getNonNullableType() !== tsType,
+
+            orNull: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
+            orUndefined: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0),
         };
     }
 
@@ -180,7 +186,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     function getTypeFromSymbol(symbol: ts.Symbol) {
         return checker.getTypeOfSymbolAtLocation(
             symbol,
-            symbol.declarations ? symbol.declarations[0] : ts.createIdentifier('Any')
+            symbol.declarations ? symbol.declarations[0] : ts.createIdentifier('Any'),
         );
     }
 

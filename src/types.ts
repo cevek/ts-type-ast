@@ -53,11 +53,14 @@ export interface Prop {
     name: string;
     type: AllTypes;
     args: Arg[] | undefined;
-    optional: boolean;
+    orUndefined: boolean;
+    orNull: boolean;
+    // nullable: boolean;
 }
 export interface Arg {
     doc: string | undefined;
     name: string;
     type: AllTypes;
-    optional: boolean;
+    orUndefined: boolean;
+    orNull: boolean;
 }
