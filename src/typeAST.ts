@@ -1,17 +1,5 @@
 import * as ts from 'typescript';
-import {
-    AllTypes,
-    Arg,
-    ArrayType,
-    Interface,
-    InterfaceLiteral,
-    Native,
-    Primitive,
-    Prop,
-    RootTypes,
-    Union,
-    UnionLiteral,
-} from './types';
+import {AllTypes, Arg, ArrayType, Interface, Native, Primitive, Prop, Union} from './types';
 declare module 'typescript' {
     interface TypeChecker {
         isArrayLikeType(arrayType: ts.Type): arrayType is ts.TypeReference;
@@ -24,7 +12,7 @@ declare module 'typescript' {
 }
 
 export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
-    const typesMap = new Map<ts.Type, RootTypes>();
+    const typesMap = new Map<ts.Type, AllTypes>();
     sourceFile.statements.forEach(visitor);
     return [...typesMap.values()];
 
@@ -50,8 +38,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
         if (isString || isNumber || isBoolean || isSymbol || isNever || isAny || isVoid) {
             const type: Primitive = {
-                kind: 'primitive',
-                type: isString
+                id: isString
                     ? 'string'
                     : isNumber
                     ? 'number'
@@ -66,8 +53,10 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     : isAny
                     ? 'any'
                     : never(),
-                rawType: rawType,
-                literal: undefined,
+                kind: 'primitive',
+                doc: undefined,
+                name: rawType,
+                members: undefined,
             };
             return type;
         }
@@ -84,9 +73,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 typesMap.set(tsType, type);
                 return type;
             } else {
-                const type: UnionLiteral = {
+                const type: Union = {
                     id: tsType.id,
-                    kind: 'unionLiteral',
+                    kind: 'union',
+                    doc: undefined,
+                    name: undefined,
                     members: tsType.types.map(t => getType(t, undefined)),
                 };
                 typesMap.set(tsType, type);
@@ -96,10 +87,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
         if (isStringLiteral || isNumberLiteral || isBooleanLiteral) {
             const type: Primitive = {
+                id: isStringLiteral ? 'string' : isNumberLiteral ? 'number' : isBooleanLiteral ? 'boolean' : never(),
                 kind: 'primitive',
-                type: isStringLiteral ? 'string' : isNumberLiteral ? 'number' : isBooleanLiteral ? 'boolean' : never(),
-                rawType: rawType,
-                literal: nonNull(tsType.value === undefined ? tsType.intrinsicName : tsType.value),
+                doc: undefined,
+                name: rawType,
+                members: nonNull(tsType.value === undefined ? tsType.intrinsicName : tsType.value),
             };
             return type;
         }
@@ -108,9 +100,13 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             const elementType = tsType.typeArguments[0];
             if (elementType) {
                 const type: ArrayType = {
+                    id: tsType.id,
                     kind: 'array',
+                    doc: undefined,
+                    name: undefined,
+
                     //todo: rawType
-                    element: getType(elementType, undefined),
+                    members: getType(elementType, undefined),
                 };
                 return type;
             }
@@ -120,9 +116,10 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             const type: Native = {
                 id: tsType.id,
                 kind: 'native',
+                doc: undefined,
                 name: symbol.name,
                 //todo:
-                generics: typeArgs.map(t => getType(t, undefined)),
+                members: typeArgs.map(t => getType(t, undefined)),
             };
             return type;
         }
@@ -139,9 +136,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 typesMap.set(tsType, type);
                 return type;
             } else {
-                const type: InterfaceLiteral = {
+                const type: Interface = {
                     id: tsType.id,
-                    kind: 'interfaceLiteral',
+                    kind: 'interface',
+                    doc: undefined,
+                    name: undefined,
                     members: checker.getPropertiesOfType(tsType).map(createProp),
                 };
                 typesMap.set(tsType, type);
@@ -151,9 +150,11 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
         if (tsType.flags & ts.TypeFlags.Object) {
             if (tsType.symbol.flags & ts.SymbolFlags.TypeLiteral) {
-                const type: InterfaceLiteral = {
+                const type: Interface = {
                     id: tsType.id,
-                    kind: 'interfaceLiteral',
+                    kind: 'interface',
+                    doc: undefined,
+                    name: undefined,
                     members: checker.getPropertiesOfType(tsType).map(createProp),
                 };
                 typesMap.set(tsType, type);
@@ -162,17 +163,19 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 const type: Interface = {
                     id: tsType.id,
                     kind: 'interface',
-                    name: tsType.symbol.name,
                     doc: getDoc(tsType.symbol),
+                    name: tsType.symbol.name,
                     members: checker.getPropertiesOfType(tsType).map(createProp),
                 };
                 typesMap.set(tsType, type);
                 return type;
             }
         }
-        const type: InterfaceLiteral = {
+        const type: Interface = {
             id: tsType.id,
-            kind: 'interfaceLiteral',
+            kind: 'interface',
+            doc: undefined,
+            name: undefined,
             members: [],
         };
         typesMap.set(tsType, type);

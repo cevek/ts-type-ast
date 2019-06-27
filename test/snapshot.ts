@@ -43,7 +43,7 @@ export const snapshot = [
     },
     {
         id: 111,
-        kind: 'interfaceLiteral',
+        kind: 'interface',
         members: [
             {
                 name: 'dOpt',
@@ -60,13 +60,13 @@ export const snapshot = [
     },
     {
         id: 110,
-        kind: 'interfaceLiteral',
+        kind: 'interface',
         members: [
             {
                 name: 'c',
                 type: {
                     id: 111,
-                    kind: 'interfaceLiteral',
+                    kind: 'interface',
                     members: [
                         {
                             name: 'dOpt',
@@ -88,7 +88,7 @@ export const snapshot = [
     },
     {
         id: 109,
-        kind: 'interfaceLiteral',
+        kind: 'interface',
         members: [
             {
                 name: 'a',
@@ -104,13 +104,13 @@ export const snapshot = [
                 name: 'b',
                 type: {
                     id: 110,
-                    kind: 'interfaceLiteral',
+                    kind: 'interface',
                     members: [
                         {
                             name: 'c',
                             type: {
                                 id: 111,
-                                kind: 'interfaceLiteral',
+                                kind: 'interface',
                                 members: [
                                     {
                                         name: 'dOpt',
@@ -138,8 +138,8 @@ export const snapshot = [
     {
         id: 93,
         kind: 'interface',
-        name: 'A',
         doc: 'A Doc',
+        name: 'A',
         members: [
             {
                 name: 'num',
@@ -318,8 +318,9 @@ export const snapshot = [
             {
                 name: 'arr',
                 type: {
+                    id: 101,
                     kind: 'array',
-                    element: {
+                    members: {
                         kind: 'primitive',
                         type: 'number',
                     },
@@ -333,7 +334,7 @@ export const snapshot = [
                     id: 102,
                     kind: 'native',
                     name: 'Date',
-                    generics: [],
+                    members: [],
                 },
                 orNull: false,
                 orUndefined: false,
@@ -344,18 +345,19 @@ export const snapshot = [
                     id: 108,
                     kind: 'native',
                     name: 'Map',
-                    generics: [
+                    members: [
                         {
                             kind: 'primitive',
                             type: 'string',
                         },
                         {
+                            id: 103,
                             kind: 'array',
-                            element: {
+                            members: {
                                 id: 102,
                                 kind: 'native',
                                 name: 'Date',
-                                generics: [],
+                                members: [],
                             },
                         },
                     ],
@@ -367,7 +369,7 @@ export const snapshot = [
                 name: 'interfaceLiteral',
                 type: {
                     id: 109,
-                    kind: 'interfaceLiteral',
+                    kind: 'interface',
                     members: [
                         {
                             name: 'a',
@@ -383,13 +385,13 @@ export const snapshot = [
                             name: 'b',
                             type: {
                                 id: 110,
-                                kind: 'interfaceLiteral',
+                                kind: 'interface',
                                 members: [
                                     {
                                         name: 'c',
                                         type: {
                                             id: 111,
-                                            kind: 'interfaceLiteral',
+                                            kind: 'interface',
                                             members: [
                                                 {
                                                     name: 'dOpt',
@@ -472,7 +474,7 @@ export const snapshot = [
     },
     {
         id: 117,
-        kind: 'unionLiteral',
+        kind: 'union',
         members: [
             {
                 id: 113,
@@ -512,7 +514,7 @@ export const snapshot = [
     },
     {
         id: 125,
-        kind: 'unionLiteral',
+        kind: 'union',
         members: [
             {
                 kind: 'primitive',
@@ -540,7 +542,7 @@ export const snapshot = [
                 name: 'union',
                 type: {
                     id: 117,
-                    kind: 'unionLiteral',
+                    kind: 'union',
                     members: [
                         {
                             id: 113,
@@ -585,7 +587,7 @@ export const snapshot = [
                 name: 'unionOpt',
                 type: {
                     id: 117,
-                    kind: 'unionLiteral',
+                    kind: 'union',
                     members: [
                         {
                             id: 113,
@@ -630,7 +632,7 @@ export const snapshot = [
                 name: 'unionabc',
                 type: {
                     id: 125,
-                    kind: 'unionLiteral',
+                    kind: 'union',
                     members: [
                         {
                             kind: 'primitive',

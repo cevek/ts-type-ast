@@ -1,46 +1,43 @@
-export type AllTypes = Interface | InterfaceLiteral | ArrayType | Union | UnionLiteral | Native | Primitive;
-export type RootTypes = Interface | Union | UnionLiteral | InterfaceLiteral;
+export type AllTypes = Interface | ArrayType | Union | Native | Primitive;
 export interface Primitive {
+    id: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
     kind: 'primitive';
-    type: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
-    rawType: string | undefined;
-    literal: string | number | boolean | undefined;
+    name: string | undefined;
+    doc: undefined;
+    members: string | number | boolean | undefined;
 }
+
 export interface Native {
     id: number;
     kind: 'native';
     name: string;
-    generics: AllTypes[];
+    doc: undefined;
+    members: AllTypes[];
 }
 
 export interface ArrayType {
+    id: number;
     kind: 'array';
-    element: AllTypes;
+    doc: undefined;
+    name: undefined;
+    members: AllTypes;
 }
 export interface Interface {
     id: number;
-    doc: string | undefined;
-    name: string;
     kind: 'interface';
+    doc: string | undefined;
+    name: string | undefined;
     members: Prop[];
 }
-export interface InterfaceLiteral {
-    id: number;
-    kind: 'interfaceLiteral';
-    members: Prop[];
-}
+
 export interface Union {
     id: number;
-    doc: string | undefined;
-    name: string;
     kind: 'union';
+    doc: string | undefined;
+    name: string | undefined;
     members: AllTypes[];
 }
-export interface UnionLiteral {
-    id: number;
-    kind: 'unionLiteral';
-    members: AllTypes[];
-}
+
 export interface Prop {
     doc: string | undefined;
     name: string;
@@ -48,7 +45,6 @@ export interface Prop {
     args: Arg[] | undefined;
     orUndefined: boolean;
     orNull: boolean;
-    // nullable: boolean;
 }
 export interface Arg {
     doc: string | undefined;
