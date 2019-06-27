@@ -46,6 +46,7 @@ export interface Prop {
     args: Arg[] | undefined;
     orUndefined: boolean;
     orNull: boolean;
+    readonly: boolean;
 }
 export interface Arg {
     doc: string | undefined;

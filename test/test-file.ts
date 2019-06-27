@@ -6,7 +6,7 @@ type Un = GenericUnion<string>;
 
 /** A Doc */
 interface A {
-    num: number;
+    readonly num: number;
     str: string;
     bool: boolean;
     never: never;
@@ -34,7 +34,7 @@ interface A {
     map: Map<string, Date[]>; // no generics
 
     interfaceLiteral: {
-        a: number;
+        readonly a: number;
         b: {
             c: {
                 /** d doc */

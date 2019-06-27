@@ -201,11 +201,14 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         const nullableRetType = signature ? signature.getReturnType() : tsType;
         const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
 
+        const modifiers = symbol.declarations[0].modifiers;
         return {
             name: symbol.name,
             doc: getDoc(symbol),
             type: getType(retType),
             sourceType: rawType(declNode) || '',
+            readonly:
+                modifiers !== undefined ? modifiers.some(mod => mod.kind === ts.SyntaxKind.ReadonlyKeyword) : false,
             args: signature && signature.parameters.map(createArg),
             orNull: nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
             orUndefined:
