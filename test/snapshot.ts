@@ -727,224 +727,326 @@ export const snapshot = [
             {
                 name: 'noArgsMethod',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
+                    id: 127,
+                    kind: 'function',
+                    members: {
+                        return: {
+                            id: 'number',
+                            kind: 'primitive',
+                        },
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [],
+                    },
                 },
                 sourceType: 'number',
                 readonly: false,
-                args: [],
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'method',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg1',
-                        type: {
+                    id: 128,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number',
-                        orNull: false,
-                        orUndefined: false,
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [
+                            {
+                                name: 'arg1',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                            {
+                                name: 'arg',
+                                type: {
+                                    id: 'string',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'string',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                        ],
                     },
-                    {
-                        name: 'arg',
-                        type: {
-                            id: 'string',
-                            kind: 'primitive',
-                        },
-                        sourceType: 'string',
-                        orNull: false,
-                        orUndefined: false,
-                    },
-                ],
+                },
+                sourceType: 'number',
+                readonly: false,
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'optMethod',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
+                    id: 129,
+                    kind: 'function',
+                    members: {
+                        return: {
+                            id: 'number',
+                            kind: 'primitive',
+                        },
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [],
+                    },
                 },
                 sourceType: 'number',
                 readonly: false,
-                args: [],
                 orNull: false,
-                orUndefined: false,
+                orUndefined: true,
             },
             {
                 name: 'optNullableMethod',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
+                    id: 131,
+                    kind: 'function',
+                    members: {
+                        return: {
+                            id: 'number',
+                            kind: 'primitive',
+                        },
+                        returnHasNull: true,
+                        returnHasUndefined: false,
+                        args: [],
+                    },
                 },
                 sourceType: 'number | null',
                 readonly: false,
-                args: [],
-                orNull: true,
-                orUndefined: false,
+                orNull: false,
+                orUndefined: true,
             },
             {
                 name: 'optNullableUndefinedMethod',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
+                    id: 133,
+                    kind: 'function',
+                    members: {
+                        return: {
+                            id: 'number',
+                            kind: 'primitive',
+                        },
+                        returnHasNull: true,
+                        returnHasUndefined: true,
+                        args: [],
+                    },
                 },
                 sourceType: 'number | null | undefined',
                 readonly: false,
-                args: [],
-                orNull: true,
+                orNull: false,
                 orUndefined: true,
             },
             {
                 name: 'methodOptArg',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg1',
-                        type: {
+                    id: 135,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number | undefined',
-                        orNull: false,
-                        orUndefined: true,
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [
+                            {
+                                name: 'arg1',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number | undefined',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: true,
+                            },
+                            {
+                                name: 'arg2',
+                                type: {
+                                    id: 'string',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'string',
+                                isSpread: false,
+                                isOptional: true,
+                                orNull: false,
+                                orUndefined: true,
+                            },
+                        ],
                     },
-                    {
-                        name: 'arg2',
-                        type: {
-                            id: 'string',
-                            kind: 'primitive',
-                        },
-                        sourceType: 'string',
-                        orNull: false,
-                        orUndefined: true,
-                    },
-                ],
+                },
+                sourceType: 'number',
+                readonly: false,
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'methodNullableArg',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg1',
-                        type: {
+                    id: 136,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number | null',
-                        orNull: true,
-                        orUndefined: false,
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [
+                            {
+                                name: 'arg1',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number | null',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: true,
+                                orUndefined: false,
+                            },
+                            {
+                                name: 'arg2',
+                                type: {
+                                    id: 137,
+                                    kind: 'array',
+                                    members: {
+                                        id: 'string',
+                                        kind: 'primitive',
+                                    },
+                                },
+                                sourceType: 'string[]',
+                                isSpread: true,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                        ],
                     },
-                    {
-                        name: 'arg2',
-                        type: {
-                            id: 'string',
-                            kind: 'primitive',
-                        },
-                        sourceType: 'string',
-                        orNull: false,
-                        orUndefined: true,
-                    },
-                ],
+                },
+                sourceType: 'number',
+                readonly: false,
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'methodOpt',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number | undefined',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg1',
-                        type: {
+                    id: 138,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number',
-                        orNull: false,
-                        orUndefined: false,
+                        returnHasNull: false,
+                        returnHasUndefined: true,
+                        args: [
+                            {
+                                name: 'arg1',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                        ],
                     },
-                ],
+                },
+                sourceType: 'number | undefined',
+                readonly: false,
                 orNull: false,
-                orUndefined: true,
+                orUndefined: false,
             },
             {
                 name: 'methodNull',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number | null',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg1',
-                        type: {
+                    id: 139,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number',
-                        orNull: false,
-                        orUndefined: false,
+                        returnHasNull: true,
+                        returnHasUndefined: false,
+                        args: [
+                            {
+                                name: 'arg1',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                        ],
                     },
-                ],
-                orNull: true,
+                },
+                sourceType: 'number | null',
+                readonly: false,
+                orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'methodDocArg',
                 type: {
-                    id: 'number',
-                    kind: 'primitive',
-                },
-                sourceType: 'number',
-                readonly: false,
-                args: [
-                    {
-                        name: 'arg',
-                        doc: 'Arg doc',
-                        type: {
+                    id: 140,
+                    kind: 'function',
+                    members: {
+                        return: {
                             id: 'number',
                             kind: 'primitive',
                         },
-                        sourceType: 'number',
-                        orNull: false,
-                        orUndefined: false,
+                        returnHasNull: false,
+                        returnHasUndefined: false,
+                        args: [
+                            {
+                                name: 'arg',
+                                doc: 'Arg doc',
+                                type: {
+                                    id: 'number',
+                                    kind: 'primitive',
+                                },
+                                sourceType: 'number',
+                                isSpread: false,
+                                isOptional: false,
+                                orNull: false,
+                                orUndefined: false,
+                            },
+                        ],
                     },
-                ],
+                },
+                sourceType: 'number',
+                readonly: false,
                 orNull: false,
                 orUndefined: false,
             },
         ],
     },
     {
-        id: 140,
+        id: 141,
         kind: 'interface',
         name: 'C',
         members: [
@@ -962,7 +1064,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 141,
+        id: 142,
         kind: 'interface',
         name: 'CD',
         members: [
@@ -991,7 +1093,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 142,
+        id: 143,
         kind: 'union',
         doc: 'Union Doc',
         name: 'Union',
@@ -1035,7 +1137,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 149,
+        id: 150,
         kind: 'union',
         doc: 'Enum Doc',
         name: 'Enum',

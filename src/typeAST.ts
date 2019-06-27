@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import {AllTypes, Arg, ArrayType, Interface, Native, Primitive, Prop, Union} from './types';
+import {AllTypes, Arg, ArrayType, Interface, Native, Primitive, Prop, Union, Fun} from './types';
 declare module 'typescript' {
     interface TypeChecker {
         isArrayLikeType(arrayType: ts.Type): arrayType is ts.TypeReference;
@@ -64,6 +64,24 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         if (isNumberLiteral) return getPrimitive('number', tsType.value);
         if (isBooleanLiteral) return getPrimitive('boolean', tsType.intrinsicName === 'true');
 
+        const signatures = checker.getSignaturesOfType(tsType, ts.SignatureKind.Call);
+        if (signatures.length > 0) {
+            const signature = signatures[0];
+            const returnType = signature.getReturnType();
+            const type: Fun = {
+                id: tsType.id,
+                kind: 'function',
+                doc: undefined,
+                name: undefined,
+                members: {
+                    return: getType(returnType),
+                    returnHasNull: hasNull(returnType),
+                    returnHasUndefined: hasUndefined(returnType),
+                    args: signature.parameters.map(createArg),
+                },
+            };
+            return type;
+        }
         if (tsType.isUnion()) {
             if (tsType.aliasSymbol) {
                 const type: Union = {
@@ -192,42 +210,33 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function createProp(symbol: ts.Symbol): Prop {
         const tsType = getTypeFromSymbol(symbol);
-        const nonNullType = tsType.getNonNullableType();
-
-        const signature = checker.getSignaturesOfType(nonNullType, ts.SignatureKind.Call)[0] as
-            | ts.Signature
-            | undefined;
-        const retType = signature ? signature.getReturnType() : nonNullType;
-        const nullableRetType = signature ? signature.getReturnType() : tsType;
         const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
-
         const modifiers = symbol.declarations[0].modifiers;
-        return {
-            name: symbol.name,
-            doc: getDoc(symbol),
-            type: getType(retType),
-            sourceType: rawType(declNode) || '',
-            readonly:
-                modifiers !== undefined ? modifiers.some(mod => mod.kind === ts.SyntaxKind.ReadonlyKeyword) : false,
-            args: signature && signature.parameters.map(createArg),
-            orNull: nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
-            orUndefined:
-                nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0),
-            // nullable: tsType !== tsType.getNonNullableType(),
-        };
-    }
-
-    function createArg(symbol: ts.Symbol): Arg {
-        const tsType = getTypeFromSymbol(symbol);
-        const declNode = symbol.declarations ? (symbol.declarations[0] as ts.PropertySignature).type : undefined;
-
         return {
             name: symbol.name,
             doc: getDoc(symbol),
             type: getType(tsType),
             sourceType: rawType(declNode) || '',
-            orNull: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
-            orUndefined: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0),
+            readonly:
+                modifiers !== undefined ? modifiers.some(mod => mod.kind === ts.SyntaxKind.ReadonlyKeyword) : false,
+            orNull: hasNull(tsType),
+            orUndefined: hasUndefined(tsType),
+        };
+    }
+
+    function createArg(symbol: ts.Symbol): Arg {
+        const tsType = getTypeFromSymbol(symbol);
+        const declNode = symbol.declarations ? (symbol.declarations[0] as ts.ParameterDeclaration) : undefined;
+        return {
+            name: symbol.name,
+            doc: getDoc(symbol),
+            type: getType(tsType),
+            sourceType: rawType(declNode && declNode.type) || '',
+            isSpread: Boolean(declNode && declNode.dotDotDotToken),
+            isOptional: Boolean(declNode && declNode.questionToken),
+
+            orNull: hasNull(tsType),
+            orUndefined: hasUndefined(tsType),
         };
     }
 
@@ -265,4 +274,11 @@ function never(never?: never): never {
 function nonNull<T>(val: T | undefined): T {
     if (val === undefined) throw new Error('Undefined is not expected');
     return val;
+}
+
+function hasNull(tsType: ts.Type) {
+    return tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0);
+}
+function hasUndefined(tsType: ts.Type) {
+    return tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0);
 }

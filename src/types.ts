@@ -1,4 +1,4 @@
-export type AllTypes = Interface | ArrayType | Union | Native | Primitive;
+export type AllTypes = Interface | ArrayType | Union | Native | Primitive | Fun;
 export interface Primitive {
     id: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
     kind: 'primitive';
@@ -38,12 +38,24 @@ export interface Union {
     members: AllTypes[];
 }
 
+export interface Fun {
+    id: number;
+    kind: 'function';
+    doc: string | undefined;
+    name: string | undefined;
+    members: {
+        return: AllTypes;
+        returnHasNull: boolean,
+        returnHasUndefined: boolean,
+        args: Arg[];
+    };
+}
+
 export interface Prop {
     doc: string | undefined;
     name: string;
     type: AllTypes;
     sourceType: string;
-    args: Arg[] | undefined;
     orUndefined: boolean;
     orNull: boolean;
     readonly: boolean;
@@ -55,4 +67,6 @@ export interface Arg {
     sourceType: string;
     orUndefined: boolean;
     orNull: boolean;
+    isSpread: boolean;
+    isOptional: boolean;
 }

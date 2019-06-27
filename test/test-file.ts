@@ -67,7 +67,7 @@ interface B {
     optNullableMethod?(): number | null;
     optNullableUndefinedMethod?(): number | null | undefined;
     methodOptArg(arg1: number | undefined, arg2?: string): number;
-    methodNullableArg(arg1: number | null, arg2?: string): number;
+    methodNullableArg(arg1: number | null, ...arg2: string[]): number;
     methodOpt(arg1: number): number | undefined;
     methodNull(arg1: number): number | null;
     methodDocArg(/** Arg doc */ arg: number): number;
