@@ -7,20 +7,20 @@ export const snapshot = [
             {
                 name: 'foo',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: true,
             },
             {
                 name: 'a',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
@@ -32,12 +32,12 @@ export const snapshot = [
         name: 'Un',
         members: [
             {
+                id: 'string',
                 kind: 'primitive',
-                type: 'string',
             },
             {
+                id: 'number',
                 kind: 'primitive',
-                type: 'number',
             },
         ],
     },
@@ -49,10 +49,10 @@ export const snapshot = [
                 name: 'dOpt',
                 doc: 'd doc',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: 'string',
                 },
+                sourceType: 'string',
                 orNull: false,
                 orUndefined: true,
             },
@@ -72,15 +72,16 @@ export const snapshot = [
                             name: 'dOpt',
                             doc: 'd doc',
                             type: {
+                                id: 'string',
                                 kind: 'primitive',
-                                type: 'string',
-                                rawType: 'string',
                             },
+                            sourceType: 'string',
                             orNull: false,
                             orUndefined: true,
                         },
                     ],
                 },
+                sourceType: '{\n                /** d doc */\n                dOpt?: string;\n            }',
                 orNull: false,
                 orUndefined: false,
             },
@@ -93,10 +94,10 @@ export const snapshot = [
             {
                 name: 'a',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
@@ -116,20 +117,24 @@ export const snapshot = [
                                         name: 'dOpt',
                                         doc: 'd doc',
                                         type: {
+                                            id: 'string',
                                             kind: 'primitive',
-                                            type: 'string',
-                                            rawType: 'string',
                                         },
+                                        sourceType: 'string',
                                         orNull: false,
                                         orUndefined: true,
                                     },
                                 ],
                             },
+                            sourceType:
+                                '{\n                /** d doc */\n                dOpt?: string;\n            }',
                             orNull: false,
                             orUndefined: false,
                         },
                     ],
                 },
+                sourceType:
+                    '{\n            c: {\n                /** d doc */\n                dOpt?: string;\n            };\n        }',
                 orNull: false,
                 orUndefined: false,
             },
@@ -144,153 +149,153 @@ export const snapshot = [
             {
                 name: 'num',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'str',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: 'string',
                 },
+                sourceType: 'string',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'bool',
                 type: {
+                    id: 'boolean',
                     kind: 'primitive',
-                    type: 'boolean',
-                    rawType: 'boolean',
                 },
+                sourceType: 'boolean',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'never',
                 type: {
+                    id: 'never',
                     kind: 'primitive',
-                    type: 'never',
-                    rawType: 'never',
                 },
+                sourceType: 'never',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'symbol',
                 type: {
+                    id: 'symbol',
                     kind: 'primitive',
-                    type: 'symbol',
-                    rawType: 'symbol',
                 },
+                sourceType: 'symbol',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'void',
                 type: {
+                    id: 'void',
                     kind: 'primitive',
-                    type: 'void',
-                    rawType: 'void',
                 },
+                sourceType: 'void',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'any',
                 type: {
+                    id: 'any',
                     kind: 'primitive',
-                    type: 'any',
-                    rawType: 'any',
                 },
+                sourceType: 'any',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'literalA',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: "'A'",
-                    literal: 'A',
+                    members: 'A',
                 },
+                sourceType: "'A'",
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'literal1',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: '1',
-                    literal: 1,
+                    members: 1,
                 },
+                sourceType: '1',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'literalTrue',
                 type: {
+                    id: 'boolean',
                     kind: 'primitive',
-                    type: 'boolean',
-                    rawType: 'true',
-                    literal: 'true',
+                    members: true,
                 },
+                sourceType: 'true',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'opt',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: true,
             },
             {
                 name: 'null',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | null',
                 },
+                sourceType: 'number | null',
                 orNull: true,
                 orUndefined: false,
             },
             {
                 name: 'undefined',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | undefined',
                 },
+                sourceType: 'number | undefined',
                 orNull: false,
                 orUndefined: true,
             },
             {
                 name: 'undefinedNull',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | undefined | null',
                 },
+                sourceType: 'number | undefined | null',
                 orNull: true,
                 orUndefined: true,
             },
             {
                 name: 'undefinedNull2',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | null',
                 },
+                sourceType: 'number | null',
                 orNull: true,
                 orUndefined: true,
             },
@@ -298,20 +303,20 @@ export const snapshot = [
                 name: 'doc',
                 doc: 'Doc comment',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: 'string',
                 },
+                sourceType: 'string',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'int',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'Int',
                 },
+                sourceType: 'Int',
                 orNull: false,
                 orUndefined: false,
             },
@@ -321,10 +326,11 @@ export const snapshot = [
                     id: 101,
                     kind: 'array',
                     members: {
+                        id: 'number',
                         kind: 'primitive',
-                        type: 'number',
                     },
                 },
+                sourceType: 'number[]',
                 orNull: false,
                 orUndefined: false,
             },
@@ -336,6 +342,7 @@ export const snapshot = [
                     name: 'Date',
                     members: [],
                 },
+                sourceType: 'Date',
                 orNull: false,
                 orUndefined: false,
             },
@@ -347,8 +354,8 @@ export const snapshot = [
                     name: 'Map',
                     members: [
                         {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
                         },
                         {
                             id: 103,
@@ -362,6 +369,7 @@ export const snapshot = [
                         },
                     ],
                 },
+                sourceType: 'Map<string, Date[]>',
                 orNull: false,
                 orUndefined: false,
             },
@@ -374,10 +382,10 @@ export const snapshot = [
                         {
                             name: 'a',
                             type: {
+                                id: 'number',
                                 kind: 'primitive',
-                                type: 'number',
-                                rawType: 'number',
                             },
+                            sourceType: 'number',
                             orNull: false,
                             orUndefined: false,
                         },
@@ -397,25 +405,31 @@ export const snapshot = [
                                                     name: 'dOpt',
                                                     doc: 'd doc',
                                                     type: {
+                                                        id: 'string',
                                                         kind: 'primitive',
-                                                        type: 'string',
-                                                        rawType: 'string',
                                                     },
+                                                    sourceType: 'string',
                                                     orNull: false,
                                                     orUndefined: true,
                                                 },
                                             ],
                                         },
+                                        sourceType:
+                                            '{\n                /** d doc */\n                dOpt?: string;\n            }',
                                         orNull: false,
                                         orUndefined: false,
                                     },
                                 ],
                             },
+                            sourceType:
+                                '{\n            c: {\n                /** d doc */\n                dOpt?: string;\n            };\n        }',
                             orNull: false,
                             orUndefined: false,
                         },
                     ],
                 },
+                sourceType:
+                    '{\n        a: number;\n        b: {\n            c: {\n                /** d doc */\n                dOpt?: string;\n            };\n        };\n    }',
                 orNull: false,
                 orUndefined: false,
             },
@@ -429,10 +443,10 @@ export const snapshot = [
             {
                 name: 'someA',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
@@ -446,10 +460,10 @@ export const snapshot = [
             {
                 name: 'someB',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
@@ -463,10 +477,10 @@ export const snapshot = [
             {
                 name: 'someC',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
@@ -484,10 +498,10 @@ export const snapshot = [
                     {
                         name: 'someA',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -501,10 +515,10 @@ export const snapshot = [
                     {
                         name: 'someB',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -517,19 +531,19 @@ export const snapshot = [
         kind: 'union',
         members: [
             {
+                id: 'string',
                 kind: 'primitive',
-                type: 'string',
-                literal: 'a',
+                members: 'a',
             },
             {
+                id: 'string',
                 kind: 'primitive',
-                type: 'string',
-                literal: 'b',
+                members: 'b',
             },
             {
+                id: 'string',
                 kind: 'primitive',
-                type: 'string',
-                literal: 'c',
+                members: 'c',
             },
         ],
     },
@@ -552,10 +566,10 @@ export const snapshot = [
                                 {
                                     name: 'someA',
                                     type: {
+                                        id: 'number',
                                         kind: 'primitive',
-                                        type: 'number',
-                                        rawType: 'number',
                                     },
+                                    sourceType: 'number',
                                     orNull: false,
                                     orUndefined: false,
                                 },
@@ -569,10 +583,10 @@ export const snapshot = [
                                 {
                                     name: 'someB',
                                     type: {
+                                        id: 'number',
                                         kind: 'primitive',
-                                        type: 'number',
-                                        rawType: 'number',
                                     },
+                                    sourceType: 'number',
                                     orNull: false,
                                     orUndefined: false,
                                 },
@@ -580,6 +594,7 @@ export const snapshot = [
                         },
                     ],
                 },
+                sourceType: 'SomeA | SomeB',
                 orNull: false,
                 orUndefined: false,
             },
@@ -597,10 +612,10 @@ export const snapshot = [
                                 {
                                     name: 'someA',
                                     type: {
+                                        id: 'number',
                                         kind: 'primitive',
-                                        type: 'number',
-                                        rawType: 'number',
                                     },
+                                    sourceType: 'number',
                                     orNull: false,
                                     orUndefined: false,
                                 },
@@ -614,10 +629,10 @@ export const snapshot = [
                                 {
                                     name: 'someB',
                                     type: {
+                                        id: 'number',
                                         kind: 'primitive',
-                                        type: 'number',
-                                        rawType: 'number',
                                     },
+                                    sourceType: 'number',
                                     orNull: false,
                                     orUndefined: false,
                                 },
@@ -625,6 +640,7 @@ export const snapshot = [
                         },
                     ],
                 },
+                sourceType: 'SomeA | SomeB',
                 orNull: false,
                 orUndefined: true,
             },
@@ -635,22 +651,23 @@ export const snapshot = [
                     kind: 'union',
                     members: [
                         {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            literal: 'a',
+                            members: 'a',
                         },
                         {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            literal: 'b',
+                            members: 'b',
                         },
                         {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            literal: 'c',
+                            members: 'c',
                         },
                     ],
                 },
+                sourceType: "'a' | 'b' | 'c'",
                 orNull: false,
                 orUndefined: false,
             },
@@ -664,10 +681,10 @@ export const snapshot = [
             {
                 name: 'noArgsMethod',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [],
                 orNull: false,
                 orUndefined: false,
@@ -675,28 +692,28 @@ export const snapshot = [
             {
                 name: 'method',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [
                     {
                         name: 'arg1',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
                     {
                         name: 'arg',
                         type: {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            rawType: 'string',
                         },
+                        sourceType: 'string',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -707,10 +724,10 @@ export const snapshot = [
             {
                 name: 'optMethod',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [],
                 orNull: false,
                 orUndefined: false,
@@ -718,10 +735,10 @@ export const snapshot = [
             {
                 name: 'optNullableMethod',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | null',
                 },
+                sourceType: 'number | null',
                 args: [],
                 orNull: true,
                 orUndefined: false,
@@ -729,10 +746,10 @@ export const snapshot = [
             {
                 name: 'optNullableUndefinedMethod',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | null | undefined',
                 },
+                sourceType: 'number | null | undefined',
                 args: [],
                 orNull: true,
                 orUndefined: true,
@@ -740,28 +757,28 @@ export const snapshot = [
             {
                 name: 'methodOptArg',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [
                     {
                         name: 'arg1',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number | undefined',
                         },
+                        sourceType: 'number | undefined',
                         orNull: false,
                         orUndefined: true,
                     },
                     {
                         name: 'arg2',
                         type: {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            rawType: 'string',
                         },
+                        sourceType: 'string',
                         orNull: false,
                         orUndefined: true,
                     },
@@ -772,28 +789,28 @@ export const snapshot = [
             {
                 name: 'methodNullableArg',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [
                     {
                         name: 'arg1',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number | null',
                         },
+                        sourceType: 'number | null',
                         orNull: true,
                         orUndefined: false,
                     },
                     {
                         name: 'arg2',
                         type: {
+                            id: 'string',
                             kind: 'primitive',
-                            type: 'string',
-                            rawType: 'string',
                         },
+                        sourceType: 'string',
                         orNull: false,
                         orUndefined: true,
                     },
@@ -804,18 +821,18 @@ export const snapshot = [
             {
                 name: 'methodOpt',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | undefined',
                 },
+                sourceType: 'number | undefined',
                 args: [
                     {
                         name: 'arg1',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -826,18 +843,18 @@ export const snapshot = [
             {
                 name: 'methodNull',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number | null',
                 },
+                sourceType: 'number | null',
                 args: [
                     {
                         name: 'arg1',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -848,19 +865,19 @@ export const snapshot = [
             {
                 name: 'methodDocArg',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 args: [
                     {
                         name: 'arg',
                         doc: 'Arg doc',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -878,10 +895,10 @@ export const snapshot = [
             {
                 name: 'c',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: 'string',
                 },
+                sourceType: 'string',
                 orNull: false,
                 orUndefined: false,
             },
@@ -895,20 +912,20 @@ export const snapshot = [
             {
                 name: 'd',
                 type: {
+                    id: 'number',
                     kind: 'primitive',
-                    type: 'number',
-                    rawType: 'number',
                 },
+                sourceType: 'number',
                 orNull: false,
                 orUndefined: false,
             },
             {
                 name: 'c',
                 type: {
+                    id: 'string',
                     kind: 'primitive',
-                    type: 'string',
-                    rawType: 'string',
                 },
+                sourceType: 'string',
                 orNull: false,
                 orUndefined: false,
             },
@@ -928,10 +945,10 @@ export const snapshot = [
                     {
                         name: 'someA',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -945,10 +962,10 @@ export const snapshot = [
                     {
                         name: 'someC',
                         type: {
+                            id: 'number',
                             kind: 'primitive',
-                            type: 'number',
-                            rawType: 'number',
                         },
+                        sourceType: 'number',
                         orNull: false,
                         orUndefined: false,
                     },
@@ -963,19 +980,19 @@ export const snapshot = [
         name: 'Enum',
         members: [
             {
+                id: 'number',
                 kind: 'primitive',
-                type: 'number',
-                literal: 0,
+                members: 0,
             },
             {
+                id: 'number',
                 kind: 'primitive',
-                type: 'number',
-                literal: 2,
+                members: 2,
             },
             {
+                id: 'string',
                 kind: 'primitive',
-                type: 'string',
-                literal: 'C',
+                members: 'C',
             },
         ],
     },

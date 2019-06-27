@@ -11,12 +11,28 @@ declare module 'typescript' {
     }
 }
 
+const primitiveMap = new Map<string | number | boolean, Primitive>();
+function getPrimitive(type: Primitive['id'], literal?: string | number | boolean): Primitive {
+    const key = literal === undefined ? type : literal;
+    const exists = primitiveMap.get(key);
+    if (exists !== undefined) return exists;
+    const primitive: Primitive = {
+        id: type,
+        kind: 'primitive',
+        doc: undefined,
+        name: undefined,
+        members: literal,
+    };
+    primitiveMap.set(key, primitive);
+    return primitive;
+}
+
 export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     const typesMap = new Map<ts.Type, AllTypes>();
     sourceFile.statements.forEach(visitor);
     return [...typesMap.values()];
 
-    function getType(nullableTsType: ts.Type, rawType: string | undefined): AllTypes {
+    function getType(nullableTsType: ts.Type): AllTypes {
         const tsType = nullableTsType.getNonNullableType();
 
         const exitsType = typesMap.get(tsType);
@@ -36,30 +52,17 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         const isVoid = tsType.flags & ts.TypeFlags.Void;
         // const isFunction = tsType.flags & ts.TypeFlags.Void;
 
-        if (isString || isNumber || isBoolean || isSymbol || isNever || isAny || isVoid) {
-            const type: Primitive = {
-                id: isString
-                    ? 'string'
-                    : isNumber
-                    ? 'number'
-                    : isBoolean
-                    ? 'boolean'
-                    : isSymbol
-                    ? 'symbol'
-                    : isNever
-                    ? 'never'
-                    : isVoid
-                    ? 'void'
-                    : isAny
-                    ? 'any'
-                    : never(),
-                kind: 'primitive',
-                doc: undefined,
-                name: rawType,
-                members: undefined,
-            };
-            return type;
-        }
+        if (isBoolean) return getPrimitive('boolean');
+        if (isString) return getPrimitive('string');
+        if (isNumber) return getPrimitive('number');
+        if (isSymbol) return getPrimitive('symbol');
+        if (isNever) return getPrimitive('never');
+        if (isVoid) return getPrimitive('void');
+        if (isAny) return getPrimitive('any');
+
+        if (isStringLiteral) return getPrimitive('string', tsType.value);
+        if (isNumberLiteral) return getPrimitive('number', tsType.value);
+        if (isBooleanLiteral) return getPrimitive('boolean', tsType.intrinsicName === 'true');
 
         if (tsType.isUnion()) {
             if (tsType.aliasSymbol) {
@@ -68,7 +71,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     kind: 'union',
                     doc: getDoc(tsType.aliasSymbol),
                     name: tsType.aliasSymbol.name,
-                    members: tsType.types.map(t => getType(t, undefined)),
+                    members: tsType.types.map(t => getType(t)),
                 };
                 typesMap.set(tsType, type);
                 return type;
@@ -78,7 +81,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     kind: 'union',
                     doc: undefined,
                     name: undefined,
-                    members: tsType.types.map(t => getType(t, undefined)),
+                    members: tsType.types.map(t => getType(t)),
                 };
                 typesMap.set(tsType, type);
                 return type;
@@ -90,7 +93,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 id: isStringLiteral ? 'string' : isNumberLiteral ? 'number' : isBooleanLiteral ? 'boolean' : never(),
                 kind: 'primitive',
                 doc: undefined,
-                name: rawType,
+                name: undefined,
                 members: nonNull(tsType.value === undefined ? tsType.intrinsicName : tsType.value),
             };
             return type;
@@ -106,7 +109,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     name: undefined,
 
                     //todo: rawType
-                    members: getType(elementType, undefined),
+                    members: getType(elementType),
                 };
                 return type;
             }
@@ -119,7 +122,7 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                 doc: undefined,
                 name: symbol.name,
                 //todo:
-                members: typeArgs.map(t => getType(t, undefined)),
+                members: typeArgs.map(t => getType(t)),
             };
             return type;
         }
@@ -201,7 +204,8 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         return {
             name: symbol.name,
             doc: getDoc(symbol),
-            type: getType(retType, rawType(declNode)),
+            type: getType(retType),
+            sourceType: rawType(declNode) || '',
             args: signature && signature.parameters.map(createArg),
             orNull: nullableRetType.isUnion() && nullableRetType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
             orUndefined:
@@ -217,8 +221,8 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         return {
             name: symbol.name,
             doc: getDoc(symbol),
-            type: getType(tsType, rawType(declNode)),
-
+            type: getType(tsType),
+            sourceType: rawType(declNode) || '',
             orNull: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Null) > 0),
             orUndefined: tsType.isUnion() && tsType.types.some(t => (t.flags & ts.TypeFlags.Undefined) > 0),
         };
@@ -233,13 +237,13 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function visitor(node: ts.Node) {
         if (ts.isInterfaceDeclaration(node)) {
-            getType(checker.getTypeAtLocation(node), undefined);
+            getType(checker.getTypeAtLocation(node));
         }
         if (ts.isEnumDeclaration(node)) {
-            getType(checker.getTypeAtLocation(node), undefined);
+            getType(checker.getTypeAtLocation(node));
         }
         if (ts.isTypeAliasDeclaration(node) && node.typeParameters === undefined) {
-            const type = getType(checker.getTypeAtLocation(node), undefined);
+            const type = getType(checker.getTypeAtLocation(node));
             if (type.kind === 'interface' || type.kind === 'union') {
                 type.name = node.name.text;
             }

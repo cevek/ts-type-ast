@@ -2,7 +2,7 @@ export type AllTypes = Interface | ArrayType | Union | Native | Primitive;
 export interface Primitive {
     id: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
     kind: 'primitive';
-    name: string | undefined;
+    name: undefined;
     doc: undefined;
     members: string | number | boolean | undefined;
 }
@@ -42,6 +42,7 @@ export interface Prop {
     doc: string | undefined;
     name: string;
     type: AllTypes;
+    sourceType: string;
     args: Arg[] | undefined;
     orUndefined: boolean;
     orNull: boolean;
@@ -50,6 +51,7 @@ export interface Arg {
     doc: string | undefined;
     name: string;
     type: AllTypes;
+    sourceType: string;
     orUndefined: boolean;
     orNull: boolean;
 }
