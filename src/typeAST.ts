@@ -3,7 +3,6 @@ import {
     AllTypes,
     Arg,
     ArrayType,
-    Enum,
     Interface,
     InterfaceLiteral,
     Native,
@@ -26,18 +25,14 @@ declare module 'typescript' {
 
 export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     const typesMap = new Map<ts.Type, RootTypes>();
-    const nonResolvedTypes = new Set<AllTypes>();
     sourceFile.statements.forEach(visitor);
-    nonResolvedTypes.forEach(type => {
-        console.error('Non resolved type:' + JSON.stringify(type));
-    });
     return [...typesMap.values()];
 
     function getType(nullableTsType: ts.Type, rawType: string | undefined): AllTypes {
         const tsType = nullableTsType.getNonNullableType();
 
-        let type = typesMap.get(tsType);
-        if (type) return type;
+        const exitsType = typesMap.get(tsType);
+        if (exitsType) return exitsType;
 
         const symbol = tsType.symbol as ts.Symbol | undefined;
 
@@ -77,14 +72,26 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             return type;
         }
 
-        if (tsType.isUnion() && !tsType.aliasSymbol) {
-            const type: UnionLiteral = {
-                id: tsType.id,
-                kind: 'unionLiteral',
-                members: tsType.types.map(t => getType(t, undefined)),
-            };
-            typesMap.set(tsType, type);
-            return type;
+        if (tsType.isUnion()) {
+            if (tsType.aliasSymbol) {
+                const type: Union = {
+                    id: tsType.id,
+                    kind: 'union',
+                    doc: getDoc(tsType.aliasSymbol),
+                    name: tsType.aliasSymbol.name,
+                    members: tsType.types.map(t => getType(t, undefined)),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            } else {
+                const type: UnionLiteral = {
+                    id: tsType.id,
+                    kind: 'unionLiteral',
+                    members: tsType.types.map(t => getType(t, undefined)),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            }
         }
 
         if (isStringLiteral || isNumberLiteral || isBooleanLiteral) {
@@ -119,19 +126,56 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             };
             return type;
         }
-        if (tsType.flags & ts.TypeFlags.Object && tsType.symbol.flags & ts.SymbolFlags.TypeLiteral) {
-            const type: InterfaceLiteral = {
-                id: tsType.id,
-                kind: 'interfaceLiteral',
-                members: checker.getPropertiesOfType(tsType).map(createProp),
-            };
-            typesMap.set(tsType, type);
-            return type;
+
+        if (tsType.isIntersection()) {
+            if (tsType.aliasSymbol) {
+                const type: Interface = {
+                    id: tsType.id,
+                    kind: 'interface',
+                    doc: getDoc(tsType.aliasSymbol),
+                    name: tsType.aliasSymbol.name,
+                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            } else {
+                const type: InterfaceLiteral = {
+                    id: tsType.id,
+                    kind: 'interfaceLiteral',
+                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            }
         }
 
-        type = {id: tsType.id} as RootTypes;
+        if (tsType.flags & ts.TypeFlags.Object) {
+            if (tsType.symbol.flags & ts.SymbolFlags.TypeLiteral) {
+                const type: InterfaceLiteral = {
+                    id: tsType.id,
+                    kind: 'interfaceLiteral',
+                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            } else {
+                const type: Interface = {
+                    id: tsType.id,
+                    kind: 'interface',
+                    name: tsType.symbol.name,
+                    doc: getDoc(tsType.symbol),
+                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                };
+                typesMap.set(tsType, type);
+                return type;
+            }
+        }
+        const type: InterfaceLiteral = {
+            id: tsType.id,
+            kind: 'interfaceLiteral',
+            members: [],
+        };
         typesMap.set(tsType, type);
-        nonResolvedTypes.add(type);
         return type;
     }
     function getDoc(symbol: ts.Symbol | undefined) {
@@ -177,12 +221,6 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
         };
     }
 
-    function updateType<T extends AllTypes>(type: T, obj: T) {
-        if (type.kind) never();
-        Object.assign(type, obj);
-        nonResolvedTypes.delete(type);
-    }
-
     function getTypeFromSymbol(symbol: ts.Symbol) {
         return checker.getTypeOfSymbolAtLocation(
             symbol,
@@ -192,38 +230,15 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function visitor(node: ts.Node) {
         if (ts.isInterfaceDeclaration(node)) {
-            const tsType = checker.getTypeAtLocation(node);
-            const type = getType(tsType, undefined) as Interface;
-            updateType(type, {
-                id: type.id,
-                kind: 'interface',
-                doc: getDoc(tsType.symbol),
-                name: node.name.text,
-                members: checker.getPropertiesOfType(tsType).map(createProp),
-            });
+            getType(checker.getTypeAtLocation(node), undefined);
         }
         if (ts.isEnumDeclaration(node)) {
-            const tsType = checker.getTypeAtLocation(node) as ts.UnionOrIntersectionType;
-            const type = getType(tsType, undefined) as Enum;
-            updateType(type, {
-                id: type.id,
-                kind: 'enum',
-                doc: getDoc(tsType.symbol),
-                name: node.name.text,
-                types: tsType.types.map(t => getType(t, undefined)),
-            });
+            getType(checker.getTypeAtLocation(node), undefined);
         }
-        if (ts.isTypeAliasDeclaration(node)) {
-            if (ts.isUnionTypeNode(node.type)) {
-                const tsType = checker.getTypeAtLocation(node.type);
-                const type = getType(tsType, undefined) as Union;
-                updateType(type, {
-                    id: type.id,
-                    kind: 'union',
-                    doc: getDoc(tsType.aliasSymbol),
-                    name: node.name.text,
-                    members: node.type.types.map(typeNode => getType(checker.getTypeFromTypeNode(typeNode), undefined)),
-                });
+        if (ts.isTypeAliasDeclaration(node) && node.typeParameters === undefined) {
+            const type = getType(checker.getTypeAtLocation(node), undefined);
+            if (type.kind === 'interface' || type.kind === 'union') {
+                type.name = node.name.text;
             }
         }
     }

@@ -1,5 +1,5 @@
-export type AllTypes = Interface | InterfaceLiteral | ArrayType | Union | UnionLiteral | Enum | Native | Primitive;
-export type RootTypes = Interface | Union | UnionLiteral | Enum | InterfaceLiteral;
+export type AllTypes = Interface | InterfaceLiteral | ArrayType | Union | UnionLiteral | Native | Primitive;
+export type RootTypes = Interface | Union | UnionLiteral | InterfaceLiteral;
 export interface Primitive {
     kind: 'primitive';
     type: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
@@ -40,13 +40,6 @@ export interface UnionLiteral {
     id: number;
     kind: 'unionLiteral';
     members: AllTypes[];
-}
-export interface Enum {
-    id: number;
-    doc: string | undefined;
-    name: string;
-    kind: 'enum';
-    types: AllTypes[];
 }
 export interface Prop {
     doc: string | undefined;

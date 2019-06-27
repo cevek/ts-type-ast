@@ -1,4 +1,8 @@
 type Int = number;
+type Generic<T> = {[P in keyof T]?: T[P]} & {a: number};
+type X = Generic<{foo: number}>;
+type GenericUnion<T> = T | number;
+type Un = GenericUnion<string>;
 
 /** A Doc */
 interface A {
@@ -15,9 +19,9 @@ interface A {
     literalTrue: true;
 
     opt?: number;
-    null: number | null; 
-    undefined: number | undefined; 
-    undefinedNull: number | undefined | null; 
+    null: number | null;
+    undefined: number | undefined;
+    undefinedNull: number | undefined | null;
     undefinedNull2?: number | null;
 
     /** Doc comment */
@@ -59,9 +63,9 @@ interface Unions {
 interface B {
     noArgsMethod(): number;
     method(arg1: number, arg: string): number;
-    optMethod?(): number; 
-    optNullableMethod?(): number | null; 
-    optNullableUndefinedMethod?(): number | null | undefined; 
+    optMethod?(): number;
+    optNullableMethod?(): number | null;
+    optNullableUndefinedMethod?(): number | null | undefined;
     methodOptArg(arg1: number | undefined, arg2?: string): number;
     methodNullableArg(arg1: number | null, arg2?: string): number;
     methodOpt(arg1: number): number | undefined;
