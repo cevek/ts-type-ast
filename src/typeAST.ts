@@ -219,8 +219,8 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             sourceType: rawType(declNode) || '',
             readonly:
                 modifiers !== undefined ? modifiers.some(mod => mod.kind === ts.SyntaxKind.ReadonlyKeyword) : false,
-            orNull: hasNull(tsType),
-            orUndefined: hasUndefined(tsType),
+            hasNull: hasNull(tsType),
+            hasUndefined: hasUndefined(tsType),
         };
     }
 
@@ -235,8 +235,8 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
             isSpread: Boolean(declNode && declNode.dotDotDotToken),
             isOptional: Boolean(declNode && declNode.questionToken),
 
-            orNull: hasNull(tsType),
-            orUndefined: hasUndefined(tsType),
+            hasNull: hasNull(tsType),
+            hasUndefined: hasUndefined(tsType),
         };
     }
 

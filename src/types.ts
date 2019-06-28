@@ -56,8 +56,8 @@ export interface Prop {
     name: string;
     type: AllTypes;
     sourceType: string;
-    orUndefined: boolean;
-    orNull: boolean;
+    hasUndefined: boolean;
+    hasNull: boolean;
     readonly: boolean;
 }
 export interface Arg {
@@ -65,8 +65,8 @@ export interface Arg {
     name: string;
     type: AllTypes;
     sourceType: string;
-    orUndefined: boolean;
-    orNull: boolean;
+    hasUndefined: boolean;
+    hasNull: boolean;
     isSpread: boolean;
     isOptional: boolean;
 }
