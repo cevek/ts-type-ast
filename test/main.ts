@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { typeAST } from '../src/typeAST';
+import { getTypesFromSourceFile } from '../src/typeAST';
 import { snapshot } from './snapshot';
 import { writeFileSync } from 'fs';
 
@@ -7,7 +7,7 @@ const file = __dirname + '/test-file.ts';
 const program = ts.createProgram({ rootNames: [file], options: { target: ts.ScriptTarget.Latest, strict: true } });
 const checker = program.getTypeChecker();
 const sourceFile = program.getSourceFile(file)!;
-const types = typeAST(checker, sourceFile);
+const types = getTypesFromSourceFile(checker, sourceFile);
 if (process.argv.slice(-1)[0] === 'create-snapshot') {
     writeFileSync(__dirname + '/snapshot.ts', 'export const snapshot = ' + JSON.stringify(types, undefined, 4));
 }

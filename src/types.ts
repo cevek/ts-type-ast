@@ -1,4 +1,4 @@
-export type AllTypes = Interface | ArrayType | Union | Native | Primitive | Fun;
+export type Type = Interface | ArrayType | Union | Native | Primitive | Fun;
 export interface Primitive {
     id: 'number' | 'string' | 'boolean' | 'symbol' | 'void' | 'never' | 'any';
     kind: 'primitive';
@@ -12,7 +12,7 @@ export interface Native {
     kind: 'native';
     name: string;
     doc: undefined;
-    members: AllTypes[];
+    members: Type[];
 }
 
 export interface ArrayType {
@@ -20,7 +20,7 @@ export interface ArrayType {
     kind: 'array';
     doc: undefined;
     name: undefined;
-    members: AllTypes;
+    members: Type;
 }
 export interface Interface {
     id: number;
@@ -35,7 +35,7 @@ export interface Union {
     kind: 'union';
     doc: string | undefined;
     name: string | undefined;
-    members: AllTypes[];
+    members: Type[];
 }
 
 export interface Fun {
@@ -44,9 +44,9 @@ export interface Fun {
     doc: string | undefined;
     name: string | undefined;
     members: {
-        return: AllTypes;
-        returnHasNull: boolean,
-        returnHasUndefined: boolean,
+        return: Type;
+        returnHasNull: boolean;
+        returnHasUndefined: boolean;
         args: Arg[];
     };
 }
@@ -54,7 +54,7 @@ export interface Fun {
 export interface Prop {
     doc: string | undefined;
     name: string;
-    type: AllTypes;
+    type: Type;
     sourceType: string;
     hasUndefined: boolean;
     hasNull: boolean;
@@ -63,7 +63,7 @@ export interface Prop {
 export interface Arg {
     doc: string | undefined;
     name: string;
-    type: AllTypes;
+    type: Type;
     sourceType: string;
     hasUndefined: boolean;
     hasNull: boolean;

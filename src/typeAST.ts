@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import {AllTypes, Arg, ArrayType, Interface, Native, Primitive, Prop, Union, Fun} from './types';
+import {Type, Arg, ArrayType, Interface, Native, Primitive, Prop, Union, Fun} from './types';
 declare module 'typescript' {
     interface TypeChecker {
         isArrayLikeType(arrayType: ts.Type): arrayType is ts.TypeReference;
@@ -27,12 +27,12 @@ function getPrimitive(type: Primitive['id'], literal?: string | number | boolean
     return primitive;
 }
 
-export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
-    const typesMap = new Map<ts.Type, AllTypes>();
+export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
+    const typesMap = new Map<ts.Type, Type>();
     sourceFile.statements.forEach(visitor);
     return [...typesMap.values()];
 
-    function getType(nullableTsType: ts.Type): AllTypes {
+    function getType(nullableTsType: ts.Type): Type {
         const tsType = nullableTsType.getNonNullableType();
 
         const exitsType = typesMap.get(tsType);
@@ -125,8 +125,6 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
                     kind: 'array',
                     doc: undefined,
                     name: undefined,
-
-                    //todo: rawType
                     members: getType(elementType),
                 };
                 return type;
@@ -210,13 +208,13 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function createProp(symbol: ts.Symbol): Prop {
         const tsType = getTypeFromSymbol(symbol);
-        const declNode = (symbol.declarations[0] as ts.PropertySignature).type;
-        const modifiers = symbol.declarations[0].modifiers;
+        const declaration = symbol.declarations[0] as ts.PropertySignature;
+        const modifiers = declaration.modifiers;
         return {
             name: symbol.name,
             doc: getDoc(symbol),
             type: getType(tsType),
-            sourceType: rawType(declNode) || '',
+            sourceType: sourceType(declaration.type),
             readonly:
                 modifiers !== undefined ? modifiers.some(mod => mod.kind === ts.SyntaxKind.ReadonlyKeyword) : false,
             hasNull: hasNull(tsType),
@@ -226,14 +224,14 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
 
     function createArg(symbol: ts.Symbol): Arg {
         const tsType = getTypeFromSymbol(symbol);
-        const declNode = symbol.declarations ? (symbol.declarations[0] as ts.ParameterDeclaration) : undefined;
+        const declaration = symbol.declarations[0] as ts.ParameterDeclaration;
         return {
             name: symbol.name,
             doc: getDoc(symbol),
             type: getType(tsType),
-            sourceType: rawType(declNode && declNode.type) || '',
-            isSpread: Boolean(declNode && declNode.dotDotDotToken),
-            isOptional: Boolean(declNode && declNode.questionToken),
+            sourceType: sourceType(declaration.type),
+            isSpread: Boolean(declaration && declaration.dotDotDotToken),
+            isOptional: Boolean(declaration && declaration.questionToken),
 
             hasNull: hasNull(tsType),
             hasUndefined: hasUndefined(tsType),
@@ -263,8 +261,8 @@ export function typeAST(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     }
 }
 
-function rawType(node: ts.TypeNode | undefined) {
-    return node ? node.getText() : undefined;
+function sourceType(node: ts.TypeNode | undefined) {
+    return node ? node.getText() : '';
 }
 
 function never(never?: never): never {
