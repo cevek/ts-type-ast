@@ -1,6 +1,6 @@
 export const snapshot = [
     {
-        id: 84,
+        id: 86,
         kind: 'interface',
         name: 'X',
         members: [
@@ -29,7 +29,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 92,
+        id: 94,
         kind: 'union',
         name: 'Un',
         members: [
@@ -44,7 +44,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 111,
+        id: 113,
         kind: 'interface',
         members: [
             {
@@ -62,13 +62,13 @@ export const snapshot = [
         ],
     },
     {
-        id: 110,
+        id: 112,
         kind: 'interface',
         members: [
             {
                 name: 'c',
                 type: {
-                    id: 111,
+                    id: 113,
                     kind: 'interface',
                     members: [
                         {
@@ -93,7 +93,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 109,
+        id: 111,
         kind: 'interface',
         members: [
             {
@@ -110,13 +110,13 @@ export const snapshot = [
             {
                 name: 'b',
                 type: {
-                    id: 110,
+                    id: 112,
                     kind: 'interface',
                     members: [
                         {
                             name: 'c',
                             type: {
-                                id: 111,
+                                id: 113,
                                 kind: 'interface',
                                 members: [
                                     {
@@ -150,7 +150,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 93,
+        id: 95,
         kind: 'interface',
         doc: 'A Doc',
         name: 'A',
@@ -349,7 +349,7 @@ export const snapshot = [
             {
                 name: 'arr',
                 type: {
-                    id: 101,
+                    id: 103,
                     kind: 'array',
                     members: {
                         id: 'number',
@@ -364,7 +364,7 @@ export const snapshot = [
             {
                 name: 'date',
                 type: {
-                    id: 102,
+                    id: 104,
                     kind: 'native',
                     name: 'Date',
                     members: [],
@@ -377,7 +377,7 @@ export const snapshot = [
             {
                 name: 'map',
                 type: {
-                    id: 108,
+                    id: 110,
                     kind: 'native',
                     name: 'Map',
                     members: [
@@ -386,10 +386,10 @@ export const snapshot = [
                             kind: 'primitive',
                         },
                         {
-                            id: 103,
+                            id: 105,
                             kind: 'array',
                             members: {
-                                id: 102,
+                                id: 104,
                                 kind: 'native',
                                 name: 'Date',
                                 members: [],
@@ -405,7 +405,7 @@ export const snapshot = [
             {
                 name: 'interfaceLiteral',
                 type: {
-                    id: 109,
+                    id: 111,
                     kind: 'interface',
                     members: [
                         {
@@ -422,13 +422,13 @@ export const snapshot = [
                         {
                             name: 'b',
                             type: {
-                                id: 110,
+                                id: 112,
                                 kind: 'interface',
                                 members: [
                                     {
                                         name: 'c',
                                         type: {
-                                            id: 111,
+                                            id: 113,
                                             kind: 'interface',
                                             members: [
                                                 {
@@ -470,7 +470,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 113,
+        id: 115,
         kind: 'interface',
         name: 'SomeA',
         members: [
@@ -488,7 +488,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 114,
+        id: 116,
         kind: 'interface',
         name: 'SomeB',
         members: [
@@ -506,7 +506,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 115,
+        id: 117,
         kind: 'interface',
         name: 'SomeC',
         members: [
@@ -524,11 +524,11 @@ export const snapshot = [
         ],
     },
     {
-        id: 117,
+        id: 119,
         kind: 'union',
         members: [
             {
-                id: 113,
+                id: 115,
                 kind: 'interface',
                 name: 'SomeA',
                 members: [
@@ -546,7 +546,7 @@ export const snapshot = [
                 ],
             },
             {
-                id: 114,
+                id: 116,
                 kind: 'interface',
                 name: 'SomeB',
                 members: [
@@ -566,7 +566,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 125,
+        id: 127,
         kind: 'union',
         members: [
             {
@@ -587,18 +587,18 @@ export const snapshot = [
         ],
     },
     {
-        id: 116,
+        id: 118,
         kind: 'interface',
         name: 'Unions',
         members: [
             {
                 name: 'union',
                 type: {
-                    id: 117,
+                    id: 119,
                     kind: 'union',
                     members: [
                         {
-                            id: 113,
+                            id: 115,
                             kind: 'interface',
                             name: 'SomeA',
                             members: [
@@ -616,7 +616,7 @@ export const snapshot = [
                             ],
                         },
                         {
-                            id: 114,
+                            id: 116,
                             kind: 'interface',
                             name: 'SomeB',
                             members: [
@@ -643,11 +643,11 @@ export const snapshot = [
             {
                 name: 'unionOpt',
                 type: {
-                    id: 117,
+                    id: 119,
                     kind: 'union',
                     members: [
                         {
-                            id: 113,
+                            id: 115,
                             kind: 'interface',
                             name: 'SomeA',
                             members: [
@@ -665,7 +665,7 @@ export const snapshot = [
                             ],
                         },
                         {
-                            id: 114,
+                            id: 116,
                             kind: 'interface',
                             name: 'SomeB',
                             members: [
@@ -692,7 +692,7 @@ export const snapshot = [
             {
                 name: 'unionabc',
                 type: {
-                    id: 125,
+                    id: 127,
                     kind: 'union',
                     members: [
                         {
@@ -720,14 +720,14 @@ export const snapshot = [
         ],
     },
     {
-        id: 126,
+        id: 128,
         kind: 'interface',
         name: 'B',
         members: [
             {
                 name: 'noArgsMethod',
                 type: {
-                    id: 127,
+                    id: 129,
                     kind: 'function',
                     members: {
                         return: {
@@ -747,7 +747,7 @@ export const snapshot = [
             {
                 name: 'method',
                 type: {
-                    id: 128,
+                    id: 130,
                     kind: 'function',
                     members: {
                         return: {
@@ -792,7 +792,7 @@ export const snapshot = [
             {
                 name: 'optMethod',
                 type: {
-                    id: 129,
+                    id: 131,
                     kind: 'function',
                     members: {
                         return: {
@@ -812,7 +812,7 @@ export const snapshot = [
             {
                 name: 'optNullableMethod',
                 type: {
-                    id: 131,
+                    id: 133,
                     kind: 'function',
                     members: {
                         return: {
@@ -832,7 +832,7 @@ export const snapshot = [
             {
                 name: 'optNullableUndefinedMethod',
                 type: {
-                    id: 133,
+                    id: 135,
                     kind: 'function',
                     members: {
                         return: {
@@ -852,7 +852,7 @@ export const snapshot = [
             {
                 name: 'methodOptArg',
                 type: {
-                    id: 135,
+                    id: 137,
                     kind: 'function',
                     members: {
                         return: {
@@ -897,7 +897,7 @@ export const snapshot = [
             {
                 name: 'methodNullableArg',
                 type: {
-                    id: 136,
+                    id: 138,
                     kind: 'function',
                     members: {
                         return: {
@@ -922,7 +922,7 @@ export const snapshot = [
                             {
                                 name: 'arg2',
                                 type: {
-                                    id: 137,
+                                    id: 139,
                                     kind: 'array',
                                     members: {
                                         id: 'string',
@@ -946,7 +946,7 @@ export const snapshot = [
             {
                 name: 'methodOpt',
                 type: {
-                    id: 138,
+                    id: 140,
                     kind: 'function',
                     members: {
                         return: {
@@ -979,7 +979,7 @@ export const snapshot = [
             {
                 name: 'methodNull',
                 type: {
-                    id: 139,
+                    id: 141,
                     kind: 'function',
                     members: {
                         return: {
@@ -1012,7 +1012,7 @@ export const snapshot = [
             {
                 name: 'methodDocArg',
                 type: {
-                    id: 140,
+                    id: 142,
                     kind: 'function',
                     members: {
                         return: {
@@ -1046,7 +1046,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 141,
+        id: 143,
         kind: 'interface',
         name: 'C',
         members: [
@@ -1064,7 +1064,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 142,
+        id: 144,
         kind: 'interface',
         name: 'CD',
         members: [
@@ -1093,13 +1093,13 @@ export const snapshot = [
         ],
     },
     {
-        id: 143,
+        id: 145,
         kind: 'union',
         doc: 'Union Doc',
         name: 'Union',
         members: [
             {
-                id: 113,
+                id: 115,
                 kind: 'interface',
                 name: 'SomeA',
                 members: [
@@ -1117,7 +1117,7 @@ export const snapshot = [
                 ],
             },
             {
-                id: 115,
+                id: 117,
                 kind: 'interface',
                 name: 'SomeC',
                 members: [
@@ -1137,7 +1137,7 @@ export const snapshot = [
         ],
     },
     {
-        id: 150,
+        id: 152,
         kind: 'union',
         doc: 'Enum Doc',
         name: 'Enum',

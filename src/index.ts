@@ -20,7 +20,18 @@ export function getTypesFromTsFile(fileName: string) {
         ...program.getSemanticDiagnostics(),
     ];
     diagnostics.forEach(diagnostic => {
-        console.error(diagnostic.messageText, {file: diagnostic.file, pos: diagnostic.start});
+        let pos;
+        const prefix = 'getTypesFromTsFile parse ts error: ';
+        if (diagnostic.file) {
+            pos = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start || 0);
+            console.error(
+                prefix,
+                diagnostic.messageText,
+                diagnostic.file.fileName + ':' + (pos.line + 1) + ':' + pos.character,
+            );
+        } else {
+            console.error(prefix, diagnostic.messageText);
+        }
     });
     return getTypesFromSourceFile(checker, sourceFile);
 }

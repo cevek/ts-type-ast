@@ -27,6 +27,19 @@ function getPrimitive(type: Primitive['id'], literal?: string | number | boolean
     return primitive;
 }
 
+function isString(type: ts.Type) {
+    return type.flags & ts.TypeFlags.String;
+}
+function isBoolean(type: ts.Type) {
+    return type.flags & ts.TypeFlags.Boolean;
+}
+function isNumber(type: ts.Type) {
+    return type.flags & ts.TypeFlags.Number;
+}
+function isSymbol(type: ts.Type) {
+    return type.flags & ts.TypeFlags.ESSymbol;
+}
+
 export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.SourceFile) {
     const typesMap = new Map<ts.Type, Type>();
     sourceFile.statements.forEach(visitor);
@@ -40,22 +53,18 @@ export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.S
 
         const symbol = tsType.symbol as ts.Symbol | undefined;
 
-        const isString = tsType.flags & ts.TypeFlags.String;
         const isStringLiteral = tsType.flags & ts.TypeFlags.StringLiteral;
-        const isNumber = tsType.flags & ts.TypeFlags.Number;
         const isNumberLiteral = tsType.flags & ts.TypeFlags.NumberLiteral;
-        const isBoolean = tsType.flags & ts.TypeFlags.Boolean;
         const isBooleanLiteral = tsType.flags & ts.TypeFlags.BooleanLiteral;
-        const isSymbol = tsType.flags & ts.TypeFlags.ESSymbol;
         const isNever = tsType.flags & ts.TypeFlags.Never;
         const isAny = tsType.flags & ts.TypeFlags.Any;
         const isVoid = tsType.flags & ts.TypeFlags.Void;
         // const isFunction = tsType.flags & ts.TypeFlags.Void;
 
-        if (isBoolean) return getPrimitive('boolean');
-        if (isString) return getPrimitive('string');
-        if (isNumber) return getPrimitive('number');
-        if (isSymbol) return getPrimitive('symbol');
+        if (isBoolean(tsType)) return getPrimitive('boolean');
+        if (isString(tsType)) return getPrimitive('string');
+        if (isNumber(tsType)) return getPrimitive('number');
+        if (isSymbol(tsType)) return getPrimitive('symbol');
         if (isNever) return getPrimitive('never');
         if (isVoid) return getPrimitive('void');
         if (isAny) return getPrimitive('any');
@@ -144,13 +153,22 @@ export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.S
         }
 
         if (tsType.isIntersection()) {
+            const members = tsType.types.some(
+                type =>
+                    type.flags & ts.TypeFlags.NumberLike ||
+                    type.flags & ts.TypeFlags.StringLike ||
+                    type.flags & ts.TypeFlags.BooleanLike ||
+                    type.flags & ts.TypeFlags.ESSymbolLike,
+            )
+                ? [] 
+                : checker.getPropertiesOfType(tsType).map(createProp);
             if (tsType.aliasSymbol) {
                 const type: Interface = {
                     id: tsType.id,
                     kind: 'interface',
                     doc: getDoc(tsType.aliasSymbol),
                     name: tsType.aliasSymbol.name,
-                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                    members: members,
                 };
                 typesMap.set(tsType, type);
                 return type;
@@ -160,7 +178,7 @@ export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.S
                     kind: 'interface',
                     doc: undefined,
                     name: undefined,
-                    members: checker.getPropertiesOfType(tsType).map(createProp),
+                    members: members,
                 };
                 typesMap.set(tsType, type);
                 return type;
