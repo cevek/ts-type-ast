@@ -155,10 +155,10 @@ export function getTypesFromSourceFile(checker: ts.TypeChecker, sourceFile: ts.S
         if (tsType.isIntersection()) {
             const members = tsType.types.some(
                 type =>
-                    type.flags & ts.TypeFlags.NumberLike ||
+                    Boolean(type.flags & ts.TypeFlags.NumberLike ||
                     type.flags & ts.TypeFlags.StringLike ||
                     type.flags & ts.TypeFlags.BooleanLike ||
-                    type.flags & ts.TypeFlags.ESSymbolLike,
+                    type.flags & ts.TypeFlags.ESSymbolLike),
             )
                 ? [] 
                 : checker.getPropertiesOfType(tsType).map(createProp);
